@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .question-card {
@@ -130,8 +131,6 @@
 
     <script src="../js/main.js"></script>
     <script>
-        const heartsContainer = document.getElementById('heartsContainer');
-
         const questions = [
             {
                 q: "Would you rather...",
@@ -211,29 +210,7 @@
             loadQuestion();
         }
 
-        function createFloatingHearts() {
-            setInterval(() => {
-                if (Math.random() < 0.35) {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart-float';
-                    heart.textContent = '💖';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
-                    heart.style.fontSize = '16px';
-                    
-                    heartsContainer.appendChild(heart);
-                    
-                    setTimeout(() => {
-                        if (heart.parentNode) {
-                            heart.parentNode.removeChild(heart);
-                        }
-                    }, 8000);
-                }
-            }, 2500);
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
-            createFloatingHearts();
             loadQuestion();
         });
     </script>

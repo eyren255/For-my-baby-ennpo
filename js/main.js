@@ -2,7 +2,6 @@
 console.log("💖 Ennpo is the cutest girlfriend ever! 💖");
 console.log("🐻 Shin always wins at love games 😏");
 console.log("✨ This website is made with lots of love ✨");
-console.log("🎀 Found the secret messages? You're amazing! 🎀");
 
 // DOM elements
 const greetingTitle = document.getElementById('greetingTitle');
@@ -16,37 +15,69 @@ const themeIcon = document.getElementById('themeIcon');
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
-// Dark mode functionality
+// Floating hearts state management
+const heartsState = {
+    hearts: [],
+    maxHearts: 20,
+    animationFrameId: null,
+    lastHeartTime: 0,
+    heartInterval: 2500,
+    isMobile: false
+};
+
+// Detect mobile devices
+function detectMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+        || window.innerWidth < 768;
+}
+
+// Dark mode functionality with error handling
 function initDarkMode() {
     if (!themeIcon) return;
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeIcon.textContent = '☀️';
+    
+    try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.textContent = '☀️';
+        }
+    } catch (error) {
+        console.error('Error accessing localStorage for theme:', error);
     }
 }
 
 function toggleDarkMode() {
     if (!themeIcon) return;
+    
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
     themeIcon.textContent = isDark ? '☀️' : '🌙';
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    console.log(isDark ? '🌙 Dark mode activated! Easy on the eyes! 🌙' : '☀️ Light mode activated! Bright and cheerful! ☀️');
+    
+    try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        console.log(isDark ? '🌙 Dark mode activated! Easy on the eyes! 🌙' : '☀️ Light mode activated! Bright and cheerful! ☀️');
+    } catch (error) {
+        console.error('Error saving theme to localStorage:', error);
+    }
 }
 
 if (darkModeToggle) {
     darkModeToggle.addEventListener('click', toggleDarkMode);
 }
 
-// Hamburger menu functionality
+// Hamburger menu functionality with aria-expanded
 function toggleNav() {
     if (!hamburger || !navLinks) return;
-    hamburger.classList.toggle('active');
+    
+    const isActive = hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
+    
+    // Update aria-expanded for accessibility
+    hamburger.setAttribute('aria-expanded', isActive.toString());
 }
 
 if (hamburger) {
+    hamburger.setAttribute('aria-expanded', 'false');
     hamburger.addEventListener('click', toggleNav);
 }
 
@@ -57,6 +88,7 @@ if (navLinks) {
             if (hamburger && navLinks) {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
             }
         });
     });
@@ -84,20 +116,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize dark mode
     initDarkMode();
     
-    // Animate greeting
+    // Animate greeting (only on home page)
     animateGreeting();
     
-    // Calculate days together
+    // Calculate days together (only on home page)
     updateDaysTogether();
     
-    // Create floating hearts
+    // Create floating hearts (global - works on all pages)
     createFloatingHearts();
     
-    // Set up love button
+    // Set up love button (only on home page)
     setupLoveButton();
     
-    // Update days counter every hour
-    setInterval(updateDaysTogether, 60 * 60 * 1000);
+    // Update days counter every hour (only on home page)
+    if (daysTogether) {
+        setInterval(updateDaysTogether, 60 * 60 * 1000);
+    }
 });
 
 // Animate the greeting with typing effect
@@ -115,7 +149,6 @@ function animateGreeting() {
             currentIndex++;
         } else {
             clearInterval(typeInterval);
-            // Add cursor blinking effect
             addCursorEffect();
         }
     }, 150);
@@ -130,7 +163,6 @@ function addCursorEffect() {
     cursor.style.animation = 'blink 1s infinite';
     greetingTitle.appendChild(cursor);
     
-    // Remove cursor after 3 seconds
     setTimeout(() => {
         if (cursor.parentNode) {
             cursor.parentNode.removeChild(cursor);
@@ -148,7 +180,6 @@ function updateDaysTogether() {
         const timeDiff = today.getTime() - startDate.getTime();
         const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
         
-        // Animate the number change
         animateNumber(daysTogether, parseInt(daysTogether.textContent) || 0, daysDiff);
     } catch (error) {
         console.error('Error updating days together:', error);
@@ -177,20 +208,42 @@ function animateNumber(element, start, end) {
     requestAnimationFrame(updateNumber);
 }
 
-// Create floating hearts animation
+// Create floating hearts animation - OPTIMIZED GLOBAL VERSION
 function createFloatingHearts() {
     if (!heartsContainer) return;
     
-    setInterval(() => {
-        if (Math.random() < 0.35) {
-            createHeart();
+    // Detect mobile and adjust settings
+    heartsState.isMobile = detectMobile();
+    if (heartsState.isMobile) {
+        heartsState.heartInterval = 4000; // Less frequent on mobile
+        heartsState.maxHearts = 10; // Fewer hearts on mobile
+    }
+    
+    // Main animation loop using requestAnimationFrame
+    function animateHearts(timestamp) {
+        // Clean up removed hearts from array
+        heartsState.hearts = heartsState.hearts.filter(heart => heart.element.parentNode);
+        
+        // Create new heart if conditions are met
+        if (timestamp - heartsState.lastHeartTime > heartsState.heartInterval) {
+            if (Math.random() < 0.35 && heartsState.hearts.length < heartsState.maxHearts) {
+                createHeart();
+                heartsState.lastHeartTime = timestamp;
+            }
         }
-    }, 2500);
+        
+        // Continue animation loop
+        heartsState.animationFrameId = requestAnimationFrame(animateHearts);
+    }
+    
+    // Start the animation loop
+    heartsState.animationFrameId = requestAnimationFrame(animateHearts);
 }
 
 // Create a single floating heart
 function createHeart() {
     if (!heartsContainer) return;
+    if (heartsState.hearts.length >= heartsState.maxHearts) return;
     
     const heart = document.createElement('div');
     heart.className = 'heart-float';
@@ -200,7 +253,9 @@ function createHeart() {
     heart.style.fontSize = '16px';
     
     heartsContainer.appendChild(heart);
+    heartsState.hearts.push({ element: heart, createdAt: Date.now() });
     
+    // Auto-remove after animation completes
     setTimeout(() => {
         if (heart.parentNode) {
             heart.parentNode.removeChild(heart);
@@ -239,9 +294,6 @@ function handleLoveClick() {
         loveBtn.style.transform = 'scale(1)';
         isAnimating = false;
     }, 150);
-    
-    // Console log for fun
-    console.log(`💖 Love click #${clickCount}! Ennpo loves Shin! 💖`);
 }
 
 // Create burst effect when button is clicked
@@ -252,7 +304,6 @@ function createBurstEffect() {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
-    // Create multiple hearts for burst effect
     for (let i = 0; i < 12; i++) {
         const heart = document.createElement('div');
         heart.textContent = '💖';
@@ -266,7 +317,6 @@ function createBurstEffect() {
         
         document.body.appendChild(heart);
         
-        // Animate with transform
         setTimeout(() => {
             const angle = (i / 12) * Math.PI * 2;
             const distance = 80 + Math.random() * 40;
@@ -293,17 +343,13 @@ function checkMilestone() {
         milestone.textContent = milestones[clickCount];
         milestone.classList.add('show');
         
-        // Special effects for major milestones
         if (clickCount >= 50) {
             createConfetti();
         }
         
-        // Hide milestone after 5 seconds
         setTimeout(() => {
             milestone.classList.remove('show');
         }, 5000);
-        
-        console.log(`🎉 Milestone reached: ${clickCount} clicks! ${milestones[clickCount]} 🎉`);
     }
 }
 
@@ -388,6 +434,26 @@ style.textContent = `
         0% { transform: translateY(0) rotate(0deg); opacity: 1; }
         100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
+    
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+    }
+    
+    /* Focus visible styles for accessibility */
+    *:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 4px;
+    }
+    
+    button:focus-visible, 
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+    }
 `;
 document.head.appendChild(style);
 
@@ -396,7 +462,6 @@ createSparkles();
 
 // Add some fun hover effects
 document.addEventListener('DOMContentLoaded', function() {
-    // Add hover effect to action buttons
     const actionBtns = document.querySelectorAll('.action-btn');
     actionBtns.forEach(btn => {
         btn.addEventListener('mouseenter', function() {
@@ -408,9 +473,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add click effect to nav links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
+    const navLinkElements = document.querySelectorAll('.nav-link');
+    navLinkElements.forEach(link => {
         link.addEventListener('click', function() {
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
@@ -422,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Easter egg: Konami code
 let konamiCode = [];
-const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 
 document.addEventListener('keydown', function(e) {
     konamiCode.push(e.keyCode);
@@ -431,23 +495,7 @@ document.addEventListener('keydown', function(e) {
     }
     
     if (konamiCode.join(',') === konamiSequence.join(',')) {
-        console.log("🎮 Konami code activated! You found the secret! 🎮");
         alert("🎉 Secret unlocked! You're amazing! 🎉\n\nShin loves Ennpo more than words can express! 💖");
         konamiCode = [];
     }
 });
-
-// Add some random console messages
-setInterval(() => {
-    const messages = [
-        "💖 Ennpo makes every day brighter! 💖",
-        "🐻 Shin is the luckiest boyfriend ever! 🐻",
-        "✨ This love story is just beginning! ✨",
-        "🎀 You two are perfect together! 🎀",
-        "💕 Love is in the air! 💕"
-    ];
-    
-    if (Math.random() < 0.1) { // 10% chance every interval
-        console.log(messages[Math.floor(Math.random() * messages.length)]);
-    }
-}, 30000); // Every 30 seconds

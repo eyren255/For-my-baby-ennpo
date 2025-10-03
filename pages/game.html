@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .game-container {
@@ -228,11 +229,6 @@
 
     <script src="../js/main.js"></script>
     <script>
-        // Console logs for game page
-        console.log("🎮 Love game loaded! Time to see who loves who more! 🎮");
-        console.log("💕 Spoiler alert: Shin always wins! 💕");
-        console.log("🐻 Shin loves Ennpo more than words can express! 🐻");
-        
         // Game state
         let gameStarted = false;
         let correctAnswers = 0;
@@ -245,7 +241,6 @@
         const result = document.getElementById('result');
         const playAgainBtn = document.getElementById('playAgainBtn');
         const score = document.getElementById('score');
-        const heartsContainer = document.getElementById('heartsContainer');
         
         // Questions array
         const questions = [
@@ -263,35 +258,8 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            createFloatingHearts();
             setupGame();
         });
-        
-        // Create floating hearts
-        function createFloatingHearts() {
-            setInterval(() => {
-                if (Math.random() < 0.2) {
-                    createHeart();
-                }
-            }, 3000);
-        }
-        
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart-float';
-            heart.textContent = '💕';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
-            
-            heartsContainer.appendChild(heart);
-            
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.parentNode.removeChild(heart);
-                }
-            }, 7000);
-        }
         
         // Set up game
         function setupGame() {
@@ -316,10 +284,8 @@
             if (isCorrect) {
                 correctAnswers++;
                 showResult("Yay! You got it! 💖 Shin loves you sooo much!", "correct");
-                console.log("🎉 Correct answer! Shin loves Ennpo more! 🎉");
             } else {
                 showResult("Oops! 🙈 Nice try cutie, but Shin loves you way more! 😘", "wrong");
-                console.log("😅 Wrong answer! Shin always loves Ennpo more! 😅");
             }
             
             updateScore();

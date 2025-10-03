@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .notes-container {
@@ -142,10 +143,6 @@
 
     <script src="../js/main.js"></script>
     <script>
-        // Console logs for notes page
-        console.log("📝 Sweet notes page loaded! Time to make Ennpo smile! 📝");
-        console.log("💕 Every note is written with love from Shin 💕");
-        
         // Sweet and teasing notes
         const notes = [
             { text: "You're too cute for words! 😘", emoji: "😍" },
@@ -185,39 +182,11 @@
         const noteText = document.getElementById('noteText');
         const noteEmoji = document.getElementById('noteEmoji');
         const newNoteBtn = document.getElementById('newNoteBtn');
-        const heartsContainer = document.getElementById('heartsContainer');
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            createFloatingHearts();
             setupNewNoteButton();
         });
-        
-        // Create floating hearts
-        function createFloatingHearts() {
-            setInterval(() => {
-                if (Math.random() < 0.2) {
-                    createHeart();
-                }
-            }, 3000);
-        }
-        
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart-float';
-            heart.textContent = '💕';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
-            
-            heartsContainer.appendChild(heart);
-            
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.parentNode.removeChild(heart);
-                }
-            }, 7000);
-        }
         
         // Set up new note button
         function setupNewNoteButton() {
@@ -241,9 +210,6 @@
                 
                 // Create burst effect
                 createBurstEffect();
-                
-                // Console log
-                console.log(`💌 New note: "${randomNote.text}" 💌`);
             }, 200);
         }
         

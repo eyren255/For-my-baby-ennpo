@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .coupons-grid {
@@ -254,6 +255,14 @@
             <h1 class="title">Love Coupons 💝</h1>
             <p class="subtitle">Choose or create a special coupon for Shin!</p>
 
+            <div class="custom-coupon-section">
+                <h2 class="title" style="font-size: 1.8rem;">Create Custom Coupon ✨</h2>
+                <input type="text" class="custom-input" id="customTitle" placeholder="Coupon Title (e.g., Cuddle Time)">
+                <textarea class="custom-input" id="customDesc" placeholder="Description..." rows="3"></textarea>
+                <input type="text" class="custom-input" id="customEmoji" placeholder="Emoji (e.g., 💕)" maxlength="2">
+                <button class="create-btn" onclick="createCustomCoupon()">Create Coupon 🎫</button>
+            </div>
+
             <div class="category-tabs">
                 <button class="category-tab active" onclick="filterCategory('all')">All</button>
                 <button class="category-tab" onclick="filterCategory('cute')">Cute 🥰</button>
@@ -262,21 +271,11 @@
             </div>
 
             <div class="coupons-grid" id="couponsGrid"></div>
-
-            <div class="custom-coupon-section">
-                <h2 class="title" style="font-size: 1.8rem;">Create Custom Coupon ✨</h2>
-                <input type="text" class="custom-input" id="customTitle" placeholder="Coupon Title (e.g., Cuddle Time)">
-                <textarea class="custom-input" id="customDesc" placeholder="Description..." rows="3"></textarea>
-                <input type="text" class="custom-input" id="customEmoji" placeholder="Emoji (e.g., 💕)" maxlength="2">
-                <button class="create-btn" onclick="createCustomCoupon()">Create Coupon 🎫</button>
-            </div>
         </div>
     </main>
 
     <script src="../js/main.js"></script>
     <script>
-        const heartsContainer = document.getElementById('heartsContainer');
-
         function shareWebsite() {
             if (navigator.share) {
                 navigator.share({
@@ -432,29 +431,7 @@
             }
         }
 
-        function createFloatingHearts() {
-            setInterval(() => {
-                if (Math.random() < 0.35) {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart-float';
-                    heart.textContent = '💖';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
-                    heart.style.fontSize = '16px';
-                    
-                    heartsContainer.appendChild(heart);
-                    
-                    setTimeout(() => {
-                        if (heart.parentNode) {
-                            heart.parentNode.removeChild(heart);
-                        }
-                    }, 8000);
-                }
-            }, 2500);
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
-            createFloatingHearts();
             renderCoupons();
         });
     </script>
