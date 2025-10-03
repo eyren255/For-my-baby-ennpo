@@ -649,14 +649,19 @@ function shareResult(content, type = 'result') {
     console.log('Share text:', text);
     console.log('Share title:', title);
     console.log('Share URL:', url);
+    console.log('Navigator.share available:', !!navigator.share);
     
     if (navigator.share) {
         navigator.share({
             title: title,
             text: text,
             url: url
-        }).catch(() => {});
+        }).catch((error) => {
+            console.error('Share failed:', error);
+            showShareMenu(text, url);
+        });
     } else {
+        console.log('Navigator.share not available, using fallback menu');
         showShareMenu(text, url);
     }
 }
