@@ -226,9 +226,14 @@
                 <div class="gift-sent-emoji">${emoji}</div>
                 <div class="gift-sent-text">Gift Sent!</div>
                 <div class="gift-sent-message">${message}</div>
-                <button class="close-modal-btn" style="margin-top: 1rem;" onclick="closeGiftModal()">
-                    Close ✖️
-                </button>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="close-modal-btn" onclick="shareGift('${emoji}', '${name}', '${message}')">
+                        Share 📤
+                    </button>
+                    <button class="close-modal-btn" onclick="closeGiftModal()">
+                        Close ✖️
+                    </button>
+                </div>
             `;
             document.body.appendChild(popup);
 
@@ -242,6 +247,11 @@
 
         function closeGiftModal() {
             document.querySelectorAll('.overlay, .gift-sent').forEach(el => el.remove());
+        }
+        
+        function shareGift(emoji, name, message) {
+            const content = `${emoji} Virtual Gift: ${name}\n${message}`;
+            shareResult(content, 'gift');
         }
 
         function createGiftExplosion(emoji) {

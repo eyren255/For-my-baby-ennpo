@@ -125,7 +125,10 @@
                 <div class="question-text" id="questionText"></div>
                 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
                     <button class="new-question-btn" onclick="backToChoice()">← Back to Choice</button>
-                    
+                    <button class="share-question-btn" onclick="shareQuestion()">
+                        <span class="btn-icon">📤</span>
+                        Share Question
+                    </button>
                 </div>
             </div>
         </div>
@@ -207,6 +210,13 @@
         function backToChoice() {
             document.getElementById('choiceSection').style.display = 'block';
             document.getElementById('questionCard').style.display = 'none';
+        }
+        
+        function shareQuestion() {
+            const questionText = document.getElementById('questionText').textContent;
+            const typeText = currentType === 'truth' ? 'Truth' : 'Dare';
+            const content = `${typeText}: ${questionText}`;
+            shareResult(content, currentType);
         }
 
     </script>

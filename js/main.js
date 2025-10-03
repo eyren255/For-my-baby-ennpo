@@ -499,3 +499,172 @@ document.addEventListener('keydown', function(e) {
         konamiCode = [];
     }
 });
+
+// Share functionality
+function shareWebsite() {
+    const text = "Check out this cute romantic website made for me! 💖";
+    const url = window.location.href;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'For My Baby Ennpo 💖',
+            text: text,
+            url: url
+        }).catch(() => {});
+    } else {
+        showShareMenu(text, url);
+    }
+}
+
+function shareResult(content, type = 'result') {
+    const text = `${content}\n\nFrom Ennpo's romantic website 💖`;
+    const url = window.location.href;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: `${type === 'game' ? 'Love Game' : type === 'truth' ? 'Truth' : type === 'dare' ? 'Dare' : 'Love Coupon'} Result 💕`,
+            text: text,
+            url: url
+        }).catch(() => {});
+    } else {
+        showShareMenu(text, url);
+    }
+}
+
+function shareToTelegram(text, url) {
+    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    window.open(telegramUrl, '_blank');
+    hideShareMenu();
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard! 📋');
+        hideShareMenu();
+    }).catch(() => {
+        alert('Failed to copy. Please try again.');
+    });
+}
+
+function showShareMenu(text, url) {
+    // Remove existing share menu
+    hideShareMenu();
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'share-overlay';
+    overlay.onclick = hideShareMenu;
+    
+    const menu = document.createElement('div');
+    menu.className = 'share-menu';
+    menu.innerHTML = `
+        <div class="share-menu-header">
+            <h3>Share 💕</h3>
+            <button class="share-close" onclick="hideShareMenu()">✖️</button>
+        </div>
+        <div class="share-options">
+            <button class="share-option" onclick="shareToTelegram('${text.replace(/'/g, "\\'")}', '${url}')">
+                <span class="share-icon">✈️</span>
+                <span>Share to Telegram</span>
+            </button>
+            <button class="share-option" onclick="copyToClipboard('${text.replace(/'/g, "\\'")}')">
+                <span class="share-icon">📋</span>
+                <span>Copy to Clipboard</span>
+            </button>
+            <button class="share-option" onclick="shareMore('${text.replace(/'/g, "\\'")}', '${url}')">
+                <span class="share-icon">🔗</span>
+                <span>More Options</span>
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    document.body.appendChild(menu);
+    
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .share-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+        .share-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            z-index: 9999;
+            animation: slideUp 0.3s ease-out;
+        }
+        .share-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .share-menu-header h3 {
+            margin: 0;
+            color: var(--purple);
+        }
+        .share-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .share-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--pink);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .share-option:hover {
+            background: var(--dark-pink);
+            transform: translateY(-2px);
+        }
+        .share-icon {
+            font-size: 20px;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function hideShareMenu() {
+    document.querySelectorAll('.share-overlay, .share-menu').forEach(el => el.remove());
+}
+
+function shareMore(text, url) {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Romantic Website 💖',
+            text: text,
+            url: url
+        }).catch(() => {});
+    } else {
+        copyToClipboard(text);
+    }
+    hideShareMenu();
+}

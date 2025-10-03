@@ -849,3 +849,51 @@ body.dark-mode .action-btn:hover {
         grid-template-columns: 1fr;
     }
 }
+
+/* Share button styles */
+.share-result-btn, .share-question-btn, .share-gift-btn {
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);
+}
+
+.share-result-btn:hover, .share-question-btn:hover, .share-gift-btn:hover {
+    background: var(--dark-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.3);
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+}
+
+.result-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .result-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .share-result-btn, .share-question-btn, .share-gift-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

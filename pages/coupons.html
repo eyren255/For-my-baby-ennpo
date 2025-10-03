@@ -363,6 +363,16 @@
             buttonsDiv.style.cssText = 'display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;';
             
             
+            // Create share button
+            const shareBtn = document.createElement('button');
+            shareBtn.className = 'close-modal-btn';
+            shareBtn.textContent = 'Share 📤';
+            shareBtn.addEventListener('click', () => {
+                const content = `${coupon.emoji} Love Coupon: ${coupon.title}\n${coupon.desc}`;
+                shareResult(content, 'coupon');
+            });
+            buttonsDiv.appendChild(shareBtn);
+            
             // Create close button
             const closeBtn = document.createElement('button');
             closeBtn.className = 'close-modal-btn';

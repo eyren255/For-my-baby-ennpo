@@ -221,7 +221,13 @@
                     
                     <div class="result" id="result"></div>
                     
-                    <button class="play-again-btn" id="playAgainBtn">Play Again! 🎮</button>
+                    <div class="result-actions" id="resultActions" style="display: none;">
+                        <button class="share-result-btn" onclick="shareGameResult()">
+                            <span class="btn-icon">📤</span>
+                            Share Result
+                        </button>
+                        <button class="play-again-btn" id="playAgainBtn">Play Again! 🎮</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -301,6 +307,9 @@
             result.textContent = message;
             result.className = `result show ${type}`;
             
+            // Show share button
+            document.getElementById('resultActions').style.display = 'flex';
+            
             // Create celebration effect
             if (type === 'correct') {
                 createCelebrationEffect();
@@ -348,8 +357,16 @@
         function resetGame() {
             gameStarted = false;
             result.classList.remove('show');
-            playAgainBtn.classList.remove('show');
+            document.getElementById('resultActions').style.display = 'none';
             nextQuestion();
+        }
+        
+        // Share game result
+        function shareGameResult() {
+            const resultText = result.textContent;
+            const scoreText = `Score: ${correctAnswers}/${totalQuestions}`;
+            const content = `${resultText}\n${scoreText}`;
+            shareResult(content, 'game');
         }
         
         // Go to next question
