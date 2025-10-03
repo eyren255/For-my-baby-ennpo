@@ -17,13 +17,12 @@
         }
         
         .game-card {
-            background: var(--card-bg);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--pink);
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
             text-align: center;
             animation: fadeInUp 0.6s ease-out;
             transition: all 0.3s ease;
@@ -45,16 +44,15 @@
         }
         
         .option-btn {
-            background: linear-gradient(45deg, var(--pink), var(--lavender));
+            background: var(--bg-primary);
             color: var(--text-primary);
-            border: none;
+            border: 2px solid var(--border);
             padding: 1.5rem;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px var(--shadow);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -62,8 +60,8 @@
         }
         
         .option-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px var(--shadow);
+            transform: translateY(-2px);
+            border-color: var(--accent);
         }
         
         .option-btn:active {
@@ -77,12 +75,12 @@
         .result {
             font-family: 'Kalam', cursive;
             font-size: 1.8rem;
-            color: var(--dark-pink);
+            color: var(--accent);
             margin: 2rem 0;
             padding: 1.5rem;
-            background: rgba(255, 182, 193, 0.2);
-            border-radius: 15px;
-            border: 2px solid var(--pink);
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease;
@@ -94,35 +92,32 @@
         }
         
         .result.correct {
-            background: rgba(144, 238, 144, 0.3);
             border-color: #90EE90;
             color: #228B22;
         }
         
         .result.wrong {
-            background: rgba(255, 182, 193, 0.3);
-            border-color: #FFB6C1;
-            color: #DC143C;
+            border-color: var(--accent);
+            color: var(--accent);
         }
         
         .play-again-btn {
-            background: linear-gradient(45deg, var(--dark-pink), var(--purple));
+            background: var(--accent);
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 50px;
+            border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px var(--shadow);
             margin: 1rem auto;
             display: none;
         }
         
         .play-again-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px var(--shadow);
+            background: var(--accent-light);
+            transform: translateY(-2px);
         }
         
         .play-again-btn.show {
@@ -332,10 +327,10 @@
             
             if (isCorrect) {
                 correctAnswers++;
-                showResult("Correct ✅ Shin loves Ennpo more! 💖", "correct");
+                showResult("Yay! You got it! 💖 Shin loves you sooo much!", "correct");
                 console.log("🎉 Correct answer! Shin loves Ennpo more! 🎉");
             } else {
-                showResult("Wrong ❌ Shin loves Ennpo more! Try again! 😊", "wrong");
+                showResult("Oops! 🙈 Nice try cutie, but Shin loves you way more! 😘", "wrong");
                 console.log("😅 Wrong answer! Shin always loves Ennpo more! 😅");
             }
             

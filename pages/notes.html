@@ -17,13 +17,12 @@
         }
         
         .note-card {
-            background: var(--card-bg);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--pink);
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
             text-align: center;
             animation: fadeInUp 0.6s ease-out;
             min-height: 200px;
@@ -48,23 +47,22 @@
         }
         
         .new-note-btn {
-            background: linear-gradient(45deg, var(--dark-pink), var(--purple));
+            background: var(--accent);
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 50px;
+            border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px var(--shadow);
             margin: 1rem auto;
             display: block;
         }
         
         .new-note-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px var(--shadow);
+            background: var(--accent-light);
+            transform: translateY(-2px);
         }
         
         .back-btn {
