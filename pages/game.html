@@ -137,12 +137,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
         }
         
         
-        .score {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
         
         @media (max-width: 768px) {
             .options {
@@ -188,12 +182,10 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
     <!-- Main content -->
     <main class="main">
         <div class="container">
-            <h1 class="title">Who Loves Who More? 💕</h1>
-            <p class="subtitle">Choose your answer and see if you're right!</p>
+            <h1 class="title">How Much Do I Love You? 💕</h1>
+            <p class="subtitle">Let's see how much love we share!</p>
             
             <div class="game-container">
-                <div class="score" id="score">Score: 0/0</div>
-                
                 <div class="game-card">
                     <div class="question" id="question">Who loves who more?</div>
                     
@@ -227,8 +219,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
     <script>
         // Game state
         let gameStarted = false;
-        let correctAnswers = 0;
-        let totalQuestions = 0;
         
         // DOM elements
         const question = document.getElementById('question');
@@ -236,7 +226,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
         const ennpoBtn = document.getElementById('ennpoBtn');
         const result = document.getElementById('result');
         const playAgainBtn = document.getElementById('playAgainBtn');
-        const score = document.getElementById('score');
         
         // Questions array
         const questions = [
@@ -271,19 +260,16 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
             if (gameStarted) return;
             
             gameStarted = true;
-            totalQuestions++;
             
             // Shin always wins (correct answer is always true)
             const isCorrect = selectedShin;
             
             if (isCorrect) {
-                correctAnswers++;
                 showResult("Yay! You got it! 💖 Shin loves you sooo much!", "correct");
             } else {
                 showResult("Oops! 🙈 Nice try cutie, but Shin loves you way more! 😘", "wrong");
             }
             
-            updateScore();
             showPlayAgainButton();
         }
         
@@ -328,10 +314,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
             }
         }
         
-        // Update score display
-        function updateScore() {
-            score.textContent = `Score: ${correctAnswers}/${totalQuestions}`;
-        }
         
         // Show play again button
         function showPlayAgainButton() {
@@ -349,8 +331,7 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
         // Share game result
         function shareGameResult() {
             const resultText = result.textContent;
-            const scoreText = `Score: ${correctAnswers}/${totalQuestions}`;
-            const content = `${resultText}\n${scoreText}`;
+            const content = `${resultText}\n\nFrom Ennpo's love game 💕`;
             shareResult(content, 'game');
         }
         
