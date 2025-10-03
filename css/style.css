@@ -20,14 +20,18 @@
 }
 
 body.dark-mode {
-    --bg-primary: #1a1a1a;
-    --bg-secondary: #2d2d2d;
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
     --accent: #ff69b4;
     --accent-light: #ff8fc7;
-    --shadow: rgba(0, 0, 0, 0.4);
-    --border: #404040;
+    --shadow: rgba(0, 0, 0, 0.6);
+    --border: #333333;
+    --card-bg: rgba(26, 26, 26, 0.8);
+    --pink: #ff69b4;
+    --dark-pink: #ff1493;
+    --purple: #da70d6;
 }
 
 body {
@@ -39,7 +43,7 @@ body {
 }
 
 body.dark-mode {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d1f3d 100%);
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a0f2e 100%);
 }
 
 .hearts-container {
@@ -90,8 +94,9 @@ body.dark-mode {
 }
 
 body.dark-mode .dark-mode-toggle {
-    background: rgba(45, 45, 45, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
 }
 
 .dark-mode-toggle:hover {
@@ -115,7 +120,7 @@ body.dark-mode .dark-mode-toggle {
 }
 
 body.dark-mode .nav {
-    background: rgba(45, 45, 45, 0.7);
+    background: rgba(26, 26, 26, 0.9);
     border-bottom: 1px solid rgba(255, 105, 180, 0.3);
 }
 
@@ -227,8 +232,9 @@ body.dark-mode .nav-link:hover {
 }
 
 body.dark-mode .share-btn {
-    background: rgba(45, 45, 45, 0.7);
-    border: 1px solid rgba(255, 105, 180, 0.2);
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(255, 105, 180, 0.3);
+    color: var(--text-primary);
 }
 
 .share-btn:hover {
@@ -239,7 +245,7 @@ body.dark-mode .share-btn {
 }
 
 body.dark-mode .share-btn:hover {
-    background: rgba(45, 45, 45, 0.85);
+    background: rgba(26, 26, 26, 0.9);
 }
 
 .share-btn::before {
@@ -421,8 +427,8 @@ body.dark-mode .share-menu-dropdown {
 }
 
 body.dark-mode .hero-counter {
-    background: rgba(45, 45, 45, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-counter:hover {
@@ -689,8 +695,8 @@ body.dark-mode .featured-card {
 }
 
 body.dark-mode .action-btn {
-    background: rgba(45, 45, 45, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(26, 26, 26, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .action-btn:hover {
@@ -701,7 +707,7 @@ body.dark-mode .action-btn {
 }
 
 body.dark-mode .action-btn:hover {
-    background: rgba(45, 45, 45, 0.7);
+    background: rgba(26, 26, 26, 0.9);
 }
 
 .btn-icon {

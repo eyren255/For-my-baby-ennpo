@@ -603,6 +603,11 @@ function showShareMenu(text, url) {
             z-index: 9999;
             animation: slideUp 0.3s ease-out;
         }
+        
+        body.dark-mode .share-menu {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
         .share-menu-header {
             display: flex;
             justify-content: space-between;

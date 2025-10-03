@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+The navigation bar is not displayed uniformly across different pages; it needs to be made universal.
+
+I don’t want this button to appear on every page: 
+
+```html
+<button class="share-btn" onclick="shareWebsite()" aria-label="Share website">
+    Share
+</button>
+```
+
+Additionally, please fix the dark mode theme, as some colors are incorrect and do not adhere to standard dark mode design.<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +20,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link">Notes</a>
+            <a href="game.html" class="nav-link active">Game</a>
+            <a href="coupons.html" class="nav-link">Coupons</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
+        </div>
+    </nav>
+    
     <style>
         .game-container {
             max-width: 600px;
@@ -233,10 +255,6 @@
         </div>
     </main>
 
-    <!-- Share Button -->
-    <button class="share-btn" onclick="shareWebsite()" aria-label="Share website">
-        Share
-    </button>
 
     <script src="../js/main.js"></script>
     <script>
