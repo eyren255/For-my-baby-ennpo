@@ -108,11 +108,6 @@
         </div>
     </nav>
     
-    <!-- Share Button (only visible when question is shown) -->
-    <button class="share-btn" id="shareBtn" style="display: none;" onclick="shareQuestion()" title="Share this question">
-        📤
-    </button>
-
     <main class="main">
         <div class="container">
             <h1 class="title">Truth or Dare 💘</h1>
@@ -133,7 +128,30 @@
 
             <div class="card" id="questionCard" style="display: none;">
                 <div class="question-text" id="questionText"></div>
-                <button class="new-question-btn" onclick="backToChoice()">← Back to Choice</button>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                    <button class="new-question-btn" onclick="backToChoice()">← Back to Choice</button>
+                    
+                    <!-- Share Menu -->
+                    <div class="share-menu-container" id="shareMenuContainer">
+                        <button class="share-menu-btn" onclick="toggleShareMenu(event)">
+                            <span>📤</span> Share
+                        </button>
+                        <div class="share-menu-dropdown">
+                            <button class="share-menu-item" onclick="copyToClipboard()">
+                                <span class="share-icon">📋</span>
+                                <span>Copy to Clipboard</span>
+                            </button>
+                            <button class="share-menu-item" onclick="shareToTelegram()">
+                                <span class="share-icon">✈️</span>
+                                <span>Share to Telegram</span>
+                            </button>
+                            <button class="share-menu-item" onclick="shareMore()">
+                                <span class="share-icon">🔗</span>
+                                <span>More Options</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -229,29 +247,58 @@
             document.getElementById('questionText').textContent = randomQuestion;
             document.getElementById('choiceSection').style.display = 'none';
             document.getElementById('questionCard').style.display = 'flex';
-            document.getElementById('shareBtn').style.display = 'flex';
         }
 
         function backToChoice() {
             document.getElementById('choiceSection').style.display = 'block';
             document.getElementById('questionCard').style.display = 'none';
-            document.getElementById('shareBtn').style.display = 'none';
+            const shareMenu = document.getElementById('shareMenuContainer');
+            if (shareMenu) shareMenu.classList.remove('active');
         }
 
-        function shareQuestion() {
+        function toggleShareMenu(event) {
+            event.stopPropagation();
+            const shareMenu = document.getElementById('shareMenuContainer');
+            shareMenu.classList.toggle('active');
+        }
+
+        function copyToClipboard() {
+            const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard! 📋');
+                document.getElementById('shareMenuContainer').classList.remove('active');
+            });
+        }
+
+        function shareToTelegram() {
+            const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
+            const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+            window.open(telegramUrl, '_blank');
+            document.getElementById('shareMenuContainer').classList.remove('active');
+        }
+
+        function shareMore() {
             const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
             
             if (navigator.share) {
                 navigator.share({
                     title: 'Truth or Dare 💘',
                     text: text,
+                    url: window.location.href
                 }).catch(() => {});
             } else {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Question copied to clipboard! 📋');
-                });
+                copyToClipboard();
             }
+            document.getElementById('shareMenuContainer').classList.remove('active');
         }
+
+        // Close share menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const shareMenu = document.getElementById('shareMenuContainer');
+            if (shareMenu && !shareMenu.contains(e.target)) {
+                shareMenu.classList.remove('active');
+            }
+        });
 
         function createFloatingHearts() {
             setInterval(() => {
