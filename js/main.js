@@ -508,49 +508,40 @@ function shareResult(content, type = 'result') {
         // Extract coupon details and create personalized message
         const lines = content.split('\n');
         const couponLine = lines[0]; // Contains emoji and title
-        const descLine = lines[1]; // Contains description
-        
-        console.log('Coupon content:', content);
-        console.log('Coupon line:', couponLine);
-        console.log('Description line:', descLine);
+        const descLine = lines[1] || ''; // Contains description
         
         // Extract emoji and title from the coupon line
         const titleMatch = couponLine.match(/^(.+?)\s+Love Coupon:\s+(.+)$/);
         const emoji = titleMatch ? titleMatch[1] : '💝';
         const titleText = titleMatch ? titleMatch[2] : couponLine.replace(/^.+?\s+Love Coupon:\s+/, '');
         
-        console.log('Extracted emoji:', emoji);
-        console.log('Extracted title:', titleText);
-        
         text = `💕 I'm sending you a special love coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💖 Redeem this anytime, my love! From your sweetheart Ennpo 💕`;
         title = '💝 Love Coupon from Ennpo';
-        
-        console.log('Final share text:', text);
     } else if (type === 'game') {
         // Extract game result and make it personal
-        const resultText = content.replace('\n\nFrom Ennpo\'s love game 💕', '');
+        const resultText = content.replace(/\n\nFrom Ennpo's love game 💕$/, '');
         text = `🎮 Love Game Result!\n\n${resultText}\n\n💕 From Ennpo's romantic website 💖`;
         title = '🎮 Love Game Result';
     } else if (type === 'truth') {
         // Extract truth question and make it personal
-        const questionText = content.replace('Truth: ', '');
+        const questionText = content.replace(/^Truth:\s*/, '');
         text = `💭 I have a truth question for you!\n\n${questionText}\n\n💕 From Ennpo's romantic website 💖`;
         title = '💭 Truth Question from Ennpo';
     } else if (type === 'dare') {
         // Extract dare challenge and make it personal
-        const dareText = content.replace('Dare: ', '');
+        const dareText = content.replace(/^Dare:\s*/, '');
         text = `💘 I dare you to do this!\n\n${dareText}\n\n💕 From Ennpo's romantic website 💖`;
         title = '💘 Dare Challenge from Ennpo';
     } else if (type === 'gift') {
         // Extract gift details and make it personal
         const lines = content.split('\n');
         const giftLine = lines[0]; // Contains emoji and gift name
-        const messageLine = lines[1]; // Contains message
+        const messageLine = lines[1] || ''; // Contains message
         
-        // Extract just the gift name (after the emoji)
-        const titleMatch = giftLine.match(/^(.+?)\s+(.+)$/);
+        // Extract emoji and gift name from the gift line
+        const titleMatch = giftLine.match(/^(.+?)\s+Virtual Gift:\s+(.+)$/);
         const emoji = titleMatch ? titleMatch[1] : '🎁';
-        const giftName = titleMatch ? titleMatch[2].replace('Virtual Gift: ', '') : giftLine.replace('Virtual Gift: ', '');
+        const giftName = titleMatch ? titleMatch[2] : giftLine.replace(/^.+?\s+Virtual Gift:\s+/, '');
         
         text = `🎁 I'm sending you a virtual gift!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 With all my love, Ennpo 💖`;
         title = '🎁 Virtual Gift from Ennpo';
