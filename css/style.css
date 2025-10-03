@@ -746,6 +746,7 @@ body.dark-mode .action-btn:hover {
         opacity: 0;
         transition: all 0.3s ease;
         z-index: 1000;
+        width: 100%;
     }
     
     body.dark-mode .nav-links {
@@ -754,8 +755,9 @@ body.dark-mode .action-btn:hover {
     }
     
     .nav-links.active {
-        max-height: 600px;
+        max-height: 80vh;
         opacity: 1;
+        overflow-y: auto;
     }
     
     .nav-link {
@@ -766,10 +768,17 @@ body.dark-mode .action-btn:hover {
         margin-bottom: 0.5rem;
         display: block;
         text-align: center;
+        min-height: 48px;
+        line-height: 1.2;
     }
     
     .nav-link:last-child {
         margin-bottom: 0;
+    }
+    
+    .nav-link:hover {
+        background: rgba(255, 105, 180, 0.1);
+        transform: none;
     }
 }
 

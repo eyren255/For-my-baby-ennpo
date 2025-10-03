@@ -67,13 +67,19 @@ if (darkModeToggle) {
 
 // Hamburger menu functionality with aria-expanded
 function toggleNav() {
-    if (!hamburger || !navLinks) return;
+    if (!hamburger || !navLinks) {
+        console.error('Hamburger or navLinks not found!');
+        return;
+    }
     
     const isActive = hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
     
     // Update aria-expanded for accessibility
     hamburger.setAttribute('aria-expanded', isActive.toString());
+    
+    console.log('Mobile menu toggled:', isActive);
+    console.log('Nav links count:', navLinks.querySelectorAll('.nav-link').length);
 }
 
 if (hamburger) {
