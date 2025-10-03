@@ -9,27 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="navLinks">
-                <a href="../index.html" class="nav-link">🏠 Home</a>
-                <a href="notes.html" class="nav-link">📝 Notes</a>
-                <a href="game.html" class="nav-link">🎮 Game</a>
-                <a href="truthordare.html" class="nav-link">💘 Fun</a>
-                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
-                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
-                <a href="coupons.html" class="nav-link active">🎫 Coupons</a>
-                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
-            </div>
-        </div>
-    </nav>
-    
     <style>
         .coupons-grid {
             display: grid;
@@ -225,18 +204,77 @@
                 transform: translate(-50%, -50%) scale(1);
             }
         }
+        
+        /* Dark mode styles for coupons page */
+        body.dark-mode .custom-coupon-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+        
+        body.dark-mode .custom-input {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        body.dark-mode .custom-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        body.dark-mode .coupon-card {
+            background: var(--card-bg);
+            border: 2px solid var(--pink);
+        }
+        
+        body.dark-mode .coupon-modal {
+            background: var(--card-bg);
+            border: 2px solid var(--pink);
+        }
+        
+        body.dark-mode .category-tab {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        body.dark-mode .category-tab.active {
+            background: var(--accent);
+            color: white;
+        }
+        
+        body.dark-mode .category-tab:hover {
+            background: var(--accent-light);
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- Floating hearts background -->
     <div class="hearts-container" id="heartsContainer"></div>
     
+    <!-- Dark mode toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
+    <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="../index.html" class="nav-link">Home</a>
-            <a href="notes.html" class="nav-link">Notes</a>
-            <a href="game.html" class="nav-link">Game</a>
-            <a href="coupons.html" class="nav-link active">Coupons</a>
-            <a href="secret.html" class="nav-link secret">Secret</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="../index.html" class="nav-link">🏠 Home</a>
+                <a href="notes.html" class="nav-link">📝 Notes</a>
+                <a href="game.html" class="nav-link">🎮 Game</a>
+                <a href="truthordare.html" class="nav-link">💘 Fun</a>
+                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
+                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
+                <a href="coupons.html" class="nav-link active">🎫 Coupons</a>
+                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
+            </div>
         </div>
     </nav>
 

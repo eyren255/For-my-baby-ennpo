@@ -10,27 +10,6 @@
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="navLinks">
-                <a href="../index.html" class="nav-link">🏠 Home</a>
-                <a href="notes.html" class="nav-link">📝 Notes</a>
-                <a href="game.html" class="nav-link">🎮 Game</a>
-                <a href="truthordare.html" class="nav-link active">💘 Fun</a>
-                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
-                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
-                <a href="coupons.html" class="nav-link">🎫 Coupons</a>
-                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
-            </div>
-        </div>
-    </nav>
-    
     <style>
         .choice-buttons {
             display: grid;
@@ -113,15 +92,32 @@
     </style>
 </head>
 <body>
+    <!-- Floating hearts background -->
     <div class="hearts-container" id="heartsContainer"></div>
     
+    <!-- Dark mode toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
+    <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="../index.html" class="nav-link">Home</a>
-            <a href="notes.html" class="nav-link">Notes</a>
-            <a href="game.html" class="nav-link">Game</a>
-            <a href="truthordare.html" class="nav-link active">Truth or Dare</a>
-            <a href="secret.html" class="nav-link secret">Secret</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="../index.html" class="nav-link">🏠 Home</a>
+                <a href="notes.html" class="nav-link">📝 Notes</a>
+                <a href="game.html" class="nav-link">🎮 Game</a>
+                <a href="truthordare.html" class="nav-link active">💘 Fun</a>
+                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
+                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
+                <a href="coupons.html" class="nav-link">🎫 Coupons</a>
+                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
+            </div>
         </div>
     </nav>
     
