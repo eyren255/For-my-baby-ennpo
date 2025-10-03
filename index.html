@@ -22,20 +22,20 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-link active">🏠 Home</a>
-            <a href="pages/notes.html" class="nav-link">📝 Notes</a>
-            <a href="pages/truthordare.html" class="nav-link">💘 Fun</a>
-            <div class="nav-dropdown">
-                <button class="nav-dropdown-btn" onclick="toggleNavDropdown(event)">
-                    ✨ More
-                </button>
-                <div class="nav-dropdown-menu">
-                    <a href="pages/game.html" class="nav-dropdown-item">🎮 Love Game</a>
-                    <a href="pages/wouldyourather.html" class="nav-dropdown-item">💭 Would You Rather</a>
-                    <a href="pages/gifts.html" class="nav-dropdown-item">🎁 Virtual Gifts</a>
-                    <a href="pages/coupons.html" class="nav-dropdown-item">🎫 Love Coupons</a>
-                    <a href="pages/secret.html" class="nav-dropdown-item">🔐 Secret</a>
-                </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">🏠 Home</a>
+                <a href="pages/notes.html" class="nav-link">📝 Notes</a>
+                <a href="pages/game.html" class="nav-link">🎮 Game</a>
+                <a href="pages/truthordare.html" class="nav-link">💘 Fun</a>
+                <a href="pages/wouldyourather.html" class="nav-link">💭 Would You Rather</a>
+                <a href="pages/gifts.html" class="nav-link">🎁 Gifts</a>
+                <a href="pages/coupons.html" class="nav-link">🎫 Coupons</a>
+                <a href="pages/secret.html" class="nav-link secret">🔐 Secret</a>
             </div>
         </div>
     </nav>
@@ -43,18 +43,20 @@
     <!-- Main content -->
     <main class="main">
         <div class="container">
-            <!-- Greeting section -->
-            <section class="greeting">
-                <h1 class="title" id="greetingTitle">Hi Ennpo 💖</h1>
-                <p class="subtitle" id="subtitle">from Shin 🐻</p>
-            </section>
-
-            <!-- Days together counter -->
-            <section class="days-section">
-                <div class="days-card">
-                    <div class="days-number" id="daysTogether">0</div>
-                    <div class="days-text">Days Together</div>
-                    <div class="days-date">Since October 1, 2025 💕</div>
+            <!-- Hero section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title" id="greetingTitle">Hi Ennpo 💖</h1>
+                    <p class="hero-subtitle" id="subtitle">from Shin 🐻</p>
+                    
+                    <!-- Days together counter -->
+                    <div class="hero-counter">
+                        <div class="counter-wrapper">
+                            <div class="counter-number" id="daysTogether">0</div>
+                            <div class="counter-label">Days of Love</div>
+                        </div>
+                        <div class="counter-date">Since October 1, 2025 💕</div>
+                    </div>
                 </div>
             </section>
 
@@ -67,15 +69,25 @@
                         <div class="featured-title">Sweet Notes</div>
                         <div class="featured-desc">Read lovely messages</div>
                     </a>
+                    <a href="pages/game.html" class="featured-card">
+                        <div class="featured-emoji">🎮</div>
+                        <div class="featured-title">Love Game</div>
+                        <div class="featured-desc">Test our love</div>
+                    </a>
                     <a href="pages/truthordare.html" class="featured-card">
                         <div class="featured-emoji">💘</div>
                         <div class="featured-title">Truth or Dare</div>
                         <div class="featured-desc">Spicy challenges</div>
                     </a>
+                    <a href="pages/wouldyourather.html" class="featured-card">
+                        <div class="featured-emoji">💭</div>
+                        <div class="featured-title">Would You Rather</div>
+                        <div class="featured-desc">Fun questions</div>
+                    </a>
                     <a href="pages/gifts.html" class="featured-card">
                         <div class="featured-emoji">🎁</div>
-                        <div class="featured-title">Send a Gift</div>
-                        <div class="featured-desc">Virtual surprises</div>
+                        <div class="featured-title">Virtual Gifts</div>
+                        <div class="featured-desc">Send surprises</div>
                     </a>
                     <a href="pages/coupons.html" class="featured-card">
                         <div class="featured-emoji">🎫</div>

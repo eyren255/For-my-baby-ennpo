@@ -98,13 +98,21 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="../index.html" class="nav-link">Home</a>
-            <a href="notes.html" class="nav-link active">Notes</a>
-            <a href="game.html" class="nav-link">Games</a>
-            <a href="truthordare.html" class="nav-link">Truth or Dare</a>
-            <a href="wouldyourather.html" class="nav-link">Would You Rather</a>
-            <a href="gifts.html" class="nav-link">Gifts</a>
-            <a href="secret.html" class="nav-link secret">Secret</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="../index.html" class="nav-link">🏠 Home</a>
+                <a href="notes.html" class="nav-link active">📝 Notes</a>
+                <a href="game.html" class="nav-link">🎮 Game</a>
+                <a href="truthordare.html" class="nav-link">💘 Fun</a>
+                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
+                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
+                <a href="coupons.html" class="nav-link">🎫 Coupons</a>
+                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
+            </div>
         </div>
     </nav>
     
@@ -132,30 +140,8 @@
         </div>
     </main>
 
+    <script src="../js/main.js"></script>
     <script>
-        // Dark mode functionality
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        
-        function initDarkMode() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-mode');
-                themeIcon.textContent = '☀️';
-            }
-        }
-        
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            themeIcon.textContent = isDark ? '☀️' : '🌙';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
-        
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('click', toggleDarkMode);
-        }
-        
         // Console logs for notes page
         console.log("📝 Sweet notes page loaded! Time to make Ennpo smile! 📝");
         console.log("💕 Every note is written with love from Shin 💕");
@@ -203,7 +189,6 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            initDarkMode();
             createFloatingHearts();
             setupNewNoteButton();
         });

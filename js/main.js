@@ -13,9 +13,12 @@ const daysTogether = document.getElementById('daysTogether');
 const heartsContainer = document.getElementById('heartsContainer');
 const darkModeToggle = document.getElementById('darkModeToggle');
 const themeIcon = document.getElementById('themeIcon');
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
 
 // Dark mode functionality
 function initDarkMode() {
+    if (!themeIcon) return;
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
@@ -24,6 +27,7 @@ function initDarkMode() {
 }
 
 function toggleDarkMode() {
+    if (!themeIcon) return;
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
     themeIcon.textContent = isDark ? '☀️' : '🌙';
@@ -33,6 +37,29 @@ function toggleDarkMode() {
 
 if (darkModeToggle) {
     darkModeToggle.addEventListener('click', toggleDarkMode);
+}
+
+// Hamburger menu functionality
+function toggleNav() {
+    if (!hamburger || !navLinks) return;
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+}
+
+if (hamburger) {
+    hamburger.addEventListener('click', toggleNav);
+}
+
+if (navLinks) {
+    const allNavLinks = navLinks.querySelectorAll('.nav-link');
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (hamburger && navLinks) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    });
 }
 
 // Love counter state
@@ -75,6 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Animate the greeting with typing effect
 function animateGreeting() {
+    if (!greetingTitle) return;
+    
     const fullText = "Hi Ennpo 💖";
     let currentIndex = 0;
     
@@ -94,6 +123,8 @@ function animateGreeting() {
 
 // Add blinking cursor effect
 function addCursorEffect() {
+    if (!greetingTitle) return;
+    
     const cursor = document.createElement('span');
     cursor.textContent = '|';
     cursor.style.animation = 'blink 1s infinite';
@@ -109,17 +140,25 @@ function addCursorEffect() {
 
 // Calculate and display days together
 function updateDaysTogether() {
-    const startDate = new Date('2025-10-01');
-    const today = new Date();
-    const timeDiff = today.getTime() - startDate.getTime();
-    const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+    if (!daysTogether) return;
     
-    // Animate the number change
-    animateNumber(daysTogether, parseInt(daysTogether.textContent) || 0, daysDiff);
+    try {
+        const startDate = new Date('2025-10-01');
+        const today = new Date();
+        const timeDiff = today.getTime() - startDate.getTime();
+        const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+        
+        // Animate the number change
+        animateNumber(daysTogether, parseInt(daysTogether.textContent) || 0, daysDiff);
+    } catch (error) {
+        console.error('Error updating days together:', error);
+    }
 }
 
 // Animate number changes
 function animateNumber(element, start, end) {
+    if (!element) return;
+    
     const duration = 1000;
     const startTime = performance.now();
     
@@ -140,6 +179,8 @@ function animateNumber(element, start, end) {
 
 // Create floating hearts animation
 function createFloatingHearts() {
+    if (!heartsContainer) return;
+    
     setInterval(() => {
         if (Math.random() < 0.35) {
             createHeart();
@@ -149,6 +190,8 @@ function createFloatingHearts() {
 
 // Create a single floating heart
 function createHeart() {
+    if (!heartsContainer) return;
+    
     const heart = document.createElement('div');
     heart.className = 'heart-float';
     heart.textContent = '💖';
@@ -167,19 +210,22 @@ function createHeart() {
 
 // Set up love button functionality
 function setupLoveButton() {
+    if (!loveBtn) return;
     loveBtn.addEventListener('click', handleLoveClick);
 }
 
 // Handle love button click
 function handleLoveClick() {
-    if (isAnimating) return;
+    if (isAnimating || !loveBtn) return;
     
     clickCount++;
     isAnimating = true;
     
     // Update counter display
-    loveCount.textContent = `${clickCount} ${clickCount === 1 ? 'click' : 'clicks'}!`;
-    loveCount.classList.add('show');
+    if (loveCount) {
+        loveCount.textContent = `${clickCount} ${clickCount === 1 ? 'click' : 'clicks'}!`;
+        loveCount.classList.add('show');
+    }
     
     // Create burst effect
     createBurstEffect();
@@ -200,6 +246,8 @@ function handleLoveClick() {
 
 // Create burst effect when button is clicked
 function createBurstEffect() {
+    if (!loveBtn) return;
+    
     const rect = loveBtn.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -239,6 +287,8 @@ function createBurstEffect() {
 
 // Check for milestone achievements
 function checkMilestone() {
+    if (!milestone) return;
+    
     if (milestones[clickCount]) {
         milestone.textContent = milestones[clickCount];
         milestone.classList.add('show');
@@ -294,9 +344,15 @@ function shareWebsite() {
         }).catch(() => {});
     } else {
         const url = window.location.href;
-        navigator.clipboard.writeText(url).then(() => {
-            alert('Link copied to clipboard! 📋');
-        });
+        try {
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copied to clipboard! 📋');
+            }).catch(() => {
+                console.error('Failed to copy to clipboard');
+            });
+        } catch (error) {
+            console.error('Clipboard not available:', error);
+        }
     }
 }
 
