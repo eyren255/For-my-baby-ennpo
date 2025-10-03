@@ -15,14 +15,29 @@
     <!-- Floating hearts background -->
     <div class="hearts-container" id="heartsContainer"></div>
     
+    <!-- Dark mode toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-link active">Home</a>
-            <a href="pages/notes.html" class="nav-link">Notes</a>
-            <a href="pages/game.html" class="nav-link">Game</a>
-            <a href="pages/coupons.html" class="nav-link">Coupons</a>
-            <a href="pages/secret.html" class="nav-link secret">Secret</a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">🏠 Home</a>
+                <a href="pages/notes.html" class="nav-link">📝 Notes</a>
+                <a href="pages/game.html" class="nav-link">🎮 Game</a>
+                <a href="pages/truthordare.html" class="nav-link">💘 Fun</a>
+                <a href="pages/wouldyourather.html" class="nav-link">💭 Would You Rather</a>
+                <a href="pages/gifts.html" class="nav-link">🎁 Gifts</a>
+                <a href="pages/coupons.html" class="nav-link">🎫 Coupons</a>
+                <a href="pages/secret.html" class="nav-link secret">🔐 Secret</a>
+            </div>
         </div>
     </nav>
     
