@@ -7,12 +7,16 @@
 :root {
     --bg-primary: #f5f5f5;
     --bg-secondary: #ffffff;
-    --text-primary: #2d2d2d;
-    --text-secondary: #666666;
+    --text-primary: #5a4a5a;
+    --text-secondary: #9a7a9a;
     --accent: #ff69b4;
     --accent-light: #ffb3d9;
     --shadow: rgba(0, 0, 0, 0.08);
     --border: #e0e0e0;
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --pink: #ff69b4;
+    --dark-pink: #ff1493;
+    --purple: #da70d6;
 }
 
 body.dark-mode {

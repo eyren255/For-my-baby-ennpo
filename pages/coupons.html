@@ -246,10 +246,6 @@
         </div>
     </nav>
 
-    <button class="share-btn" onclick="shareWebsite()" title="Share this page">
-        📤
-    </button>
-
     <main class="main">
         <div class="container">
             <h1 class="title">Love Coupons 💝</h1>
@@ -354,11 +350,11 @@
                 <div class="modal-title">${coupon.title}</div>
                 <div class="modal-desc">${coupon.desc}</div>
                 <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    <button class="close-modal-btn" onclick="shareCoupon('${coupon.emoji}', '${coupon.title}', '${coupon.desc}')">
-                        Share 📤
+                    <button class="close-modal-btn" onclick="sendCoupon('${coupon.emoji}', '${coupon.title}', '${coupon.desc}')">
+                        Send Coupon 💌
                     </button>
                     <button class="close-modal-btn" onclick="this.parentElement.parentElement.remove(); document.querySelector('.overlay').remove()">
-                        Redeem 💖
+                        Close ✖️
                     </button>
                 </div>
             `;
@@ -369,19 +365,25 @@
             createCouponExplosion(coupon.emoji);
         }
 
-        function shareCoupon(emoji, title, desc) {
-            const text = `${emoji} Love Coupon: ${title}\n${desc} 💝`;
+        function sendCoupon(emoji, title, desc) {
+            const text = `${emoji} Love Coupon: ${title}\n${desc}\n\nFrom Shin with love 💝`;
             
             if (navigator.share) {
                 navigator.share({
-                    title: 'Love Coupon 💝',
+                    title: 'Love Coupon for Ennpo 💝',
                     text: text,
                 }).catch(() => {});
             } else {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('Coupon copied! 📋');
+                    alert('Coupon copied! You can send it to Ennpo now! 📋💕');
                 });
             }
+            
+            // Close modal after sending
+            setTimeout(() => {
+                document.querySelector('.coupon-modal')?.remove();
+                document.querySelector('.overlay')?.remove();
+            }, 500);
         }
 
         function createCustomCoupon() {
