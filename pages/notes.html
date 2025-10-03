@@ -17,7 +17,7 @@
         }
         
         .note-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -30,12 +30,13 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            transition: all 0.3s ease;
         }
         
         .note-text {
             font-family: 'Kalam', cursive;
             font-size: 1.5rem;
-            color: var(--purple);
+            color: var(--text-primary);
             margin-bottom: 1rem;
             line-height: 1.6;
         }
@@ -70,19 +71,19 @@
             position: fixed;
             top: 100px;
             left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--purple);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             text-decoration: none;
             padding: 0.5rem 1rem;
-            border-radius: 25px;
+            border-radius: 8px;
             font-weight: 500;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
             z-index: 10;
+            border: 1px solid var(--border);
         }
         
         .back-btn:hover {
-            background: var(--pink);
+            border-color: var(--accent);
             transform: translateY(-2px);
         }
     </style>
@@ -90,6 +91,11 @@
 <body>
     <!-- Floating hearts background -->
     <div class="hearts-container" id="heartsContainer"></div>
+    
+    <!-- Dark mode toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
     
     <!-- Navigation -->
     <nav class="nav">
@@ -126,6 +132,29 @@
     </main>
 
     <script>
+        // Dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        function initDarkMode() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.textContent = '☀️';
+            }
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        }
+        
         // Console logs for notes page
         console.log("📝 Sweet notes page loaded! Time to make Ennpo smile! 📝");
         console.log("💕 Every note is written with love from Shin 💕");
@@ -173,6 +202,7 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
             createFloatingHearts();
             setupNewNoteButton();
         });

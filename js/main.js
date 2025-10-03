@@ -138,13 +138,13 @@ function animateNumber(element, start, end) {
     requestAnimationFrame(updateNumber);
 }
 
-// Create floating hearts animation
+// Create floating hearts animation (reduced for cleaner look)
 function createFloatingHearts() {
     setInterval(() => {
-        if (Math.random() < 0.3) { // 30% chance every interval
+        if (Math.random() < 0.12) {
             createHeart();
         }
-    }, 2000);
+    }, 4000);
 }
 
 // Create a single floating heart
@@ -153,17 +153,16 @@ function createHeart() {
     heart.className = 'heart-float';
     heart.textContent = '💖';
     heart.style.left = Math.random() * 100 + '%';
-    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-    heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+    heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
+    heart.style.fontSize = '16px';
     
     heartsContainer.appendChild(heart);
     
-    // Remove heart after animation
     setTimeout(() => {
         if (heart.parentNode) {
             heart.parentNode.removeChild(heart);
         }
-    }, 7000);
+    }, 8000);
 }
 
 // Set up love button functionality
