@@ -552,6 +552,11 @@ function shareResult(content, type = 'result') {
     
     const url = window.location.href;
     
+    console.log('Share type:', type);
+    console.log('Share text:', text);
+    console.log('Share title:', title);
+    console.log('Share URL:', url);
+    
     if (navigator.share) {
         navigator.share({
             title: title,
@@ -569,8 +574,9 @@ function shareToTelegram(text, url) {
     hideShareMenu();
 }
 
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
+function copyToClipboard(text, url) {
+    const fullMessage = `${text}\n\n${url}`;
+    navigator.clipboard.writeText(fullMessage).then(() => {
         alert('Copied to clipboard! 📋');
         hideShareMenu();
     }).catch(() => {
@@ -598,7 +604,7 @@ function showShareMenu(text, url) {
                 <span class="share-icon">✈️</span>
                 <span>Share to Telegram</span>
             </button>
-            <button class="share-option" onclick="copyToClipboard('${text.replace(/'/g, "\\'")}')">
+            <button class="share-option" onclick="copyToClipboard('${text.replace(/'/g, "\\'")}', '${url}')">
                 <span class="share-icon">📋</span>
                 <span>Copy to Clipboard</span>
             </button>
@@ -701,7 +707,7 @@ function shareMore(text, url) {
             url: url
         }).catch(() => {});
     } else {
-        copyToClipboard(text);
+        copyToClipboard(text, url);
     }
     hideShareMenu();
 }
