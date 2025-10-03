@@ -526,6 +526,64 @@ body.dark-mode .days-card {
     margin-bottom: 3rem;
 }
 
+.featured-section {
+    margin: 3rem 0;
+}
+
+.section-title {
+    text-align: center;
+    font-family: 'Kalam', cursive;
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.featured-card {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .featured-card {
+    background: rgba(45, 45, 45, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.featured-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 40px rgba(255, 105, 180, 0.3);
+}
+
+.featured-emoji {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.featured-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.featured-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
 .action-btn {
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(20px);

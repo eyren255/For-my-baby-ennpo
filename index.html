@@ -24,12 +24,19 @@
         <div class="nav-container">
             <a href="index.html" class="nav-link active">🏠 Home</a>
             <a href="pages/notes.html" class="nav-link">📝 Notes</a>
-            <a href="pages/game.html" class="nav-link">🎮 Games</a>
-            <a href="pages/truthordare.html" class="nav-link">💘 Truth/Dare</a>
-            <a href="pages/wouldyourather.html" class="nav-link">💭 Would You Rather</a>
-            <a href="pages/gifts.html" class="nav-link">🎁 Gifts</a>
-            <a href="pages/coupons.html" class="nav-link">🎫 Coupons</a>
-            <a href="pages/secret.html" class="nav-link secret">🔐 Secret</a>
+            <a href="pages/truthordare.html" class="nav-link">💘 Fun</a>
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn" onclick="toggleNavDropdown(event)">
+                    ✨ More
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="pages/game.html" class="nav-dropdown-item">🎮 Love Game</a>
+                    <a href="pages/wouldyourather.html" class="nav-dropdown-item">💭 Would You Rather</a>
+                    <a href="pages/gifts.html" class="nav-dropdown-item">🎁 Virtual Gifts</a>
+                    <a href="pages/coupons.html" class="nav-dropdown-item">🎫 Love Coupons</a>
+                    <a href="pages/secret.html" class="nav-dropdown-item">🔐 Secret</a>
+                </div>
+            </div>
         </div>
     </nav>
     
@@ -51,27 +58,31 @@
                 </div>
             </section>
 
-            <!-- Love counter -->
-            <section class="love-section">
-                <button class="love-btn" id="loveBtn">
-                    <span class="heart">💖</span>
-                    Click if you love Shin!
-                    <span class="heart">💖</span>
-                </button>
-                <div class="love-count" id="loveCount">0 clicks!</div>
-                <div class="milestone" id="milestone"></div>
-            </section>
-
-            <!-- Quick actions -->
-            <section class="actions">
-                <a href="pages/notes.html" class="action-btn">
-                    <span class="btn-icon">📝</span>
-                    Sweet Notes
-                </a>
-                <a href="pages/game.html" class="action-btn">
-                    <span class="btn-icon">🎮</span>
-                    Love Game
-                </a>
+            <!-- Featured Actions -->
+            <section class="featured-section">
+                <h2 class="section-title">What would you like to do? 💕</h2>
+                <div class="featured-grid">
+                    <a href="pages/notes.html" class="featured-card">
+                        <div class="featured-emoji">📝</div>
+                        <div class="featured-title">Sweet Notes</div>
+                        <div class="featured-desc">Read lovely messages</div>
+                    </a>
+                    <a href="pages/truthordare.html" class="featured-card">
+                        <div class="featured-emoji">💘</div>
+                        <div class="featured-title">Truth or Dare</div>
+                        <div class="featured-desc">Spicy challenges</div>
+                    </a>
+                    <a href="pages/gifts.html" class="featured-card">
+                        <div class="featured-emoji">🎁</div>
+                        <div class="featured-title">Send a Gift</div>
+                        <div class="featured-desc">Virtual surprises</div>
+                    </a>
+                    <a href="pages/coupons.html" class="featured-card">
+                        <div class="featured-emoji">🎫</div>
+                        <div class="featured-title">Love Coupons</div>
+                        <div class="featured-desc">Special rewards</div>
+                    </a>
+                </div>
             </section>
         </div>
     </main>
