@@ -138,13 +138,13 @@ function animateNumber(element, start, end) {
     requestAnimationFrame(updateNumber);
 }
 
-// Create floating hearts animation (reduced for cleaner look)
+// Create floating hearts animation
 function createFloatingHearts() {
     setInterval(() => {
-        if (Math.random() < 0.12) {
+        if (Math.random() < 0.35) {
             createHeart();
         }
-    }, 4000);
+    }, 2500);
 }
 
 // Create a single floating heart
@@ -205,35 +205,35 @@ function createBurstEffect() {
     const centerY = rect.top + rect.height / 2;
     
     // Create multiple hearts for burst effect
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 12; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = '💖';
+        heart.style.position = 'fixed';
+        heart.style.left = centerX + 'px';
+        heart.style.top = centerY + 'px';
+        heart.style.fontSize = '24px';
+        heart.style.zIndex = '1000';
+        heart.style.pointerEvents = 'none';
+        heart.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        
+        document.body.appendChild(heart);
+        
+        // Animate with transform
         setTimeout(() => {
-            const heart = document.createElement('div');
-            heart.className = 'heart-float';
-            heart.textContent = '💖';
-            heart.style.position = 'fixed';
-            heart.style.left = centerX + 'px';
-            heart.style.top = centerY + 'px';
-            heart.style.fontSize = '20px';
-            heart.style.animation = 'burst 1s ease-out forwards';
-            heart.style.zIndex = '1000';
+            const angle = (i / 12) * Math.PI * 2;
+            const distance = 80 + Math.random() * 40;
+            const endX = Math.cos(angle) * distance;
+            const endY = Math.sin(angle) * distance;
             
-            // Random direction for burst
-            const angle = (i / 8) * Math.PI * 2;
-            const distance = 50 + Math.random() * 30;
-            const endX = centerX + Math.cos(angle) * distance;
-            const endY = centerY + Math.sin(angle) * distance;
-            
-            heart.style.setProperty('--end-x', endX + 'px');
-            heart.style.setProperty('--end-y', endY + 'px');
-            
-            document.body.appendChild(heart);
-            
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.parentNode.removeChild(heart);
-                }
-            }, 1000);
-        }, i * 50);
+            heart.style.transform = `translate(${endX}px, ${endY}px) scale(0.5) rotate(${Math.random() * 360}deg)`;
+            heart.style.opacity = '0';
+        }, 50);
+        
+        setTimeout(() => {
+            if (heart.parentNode) {
+                heart.parentNode.removeChild(heart);
+            }
+        }, 900);
     }
 }
 

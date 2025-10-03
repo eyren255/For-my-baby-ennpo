@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Would You Rather? 💭</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .question-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .question-title {
+            font-family: 'Kalam', cursive;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .option-btn {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .option-btn.selected {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .next-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .next-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link">Notes</a>
+            <a href="game.html" class="nav-link">Games</a>
+            <a href="truthordare.html" class="nav-link">Truth or Dare</a>
+            <a href="wouldyourather.html" class="nav-link active">Would You Rather</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <h1 class="title">Would You Rather? 💭</h1>
+            <p class="subtitle">Choose what you'd prefer!</p>
+
+            <div class="question-card">
+                <div class="question-title" id="questionText">Loading...</div>
+                <div class="options">
+                    <button class="option-btn" id="option1" onclick="selectOption(1)"></button>
+                    <button class="option-btn" id="option2" onclick="selectOption(2)"></button>
+                </div>
+                <button class="next-btn" onclick="nextQuestion()">Next Question →</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const heartsContainer = document.getElementById('heartsContainer');
+
+        function initDarkMode() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
+        const questions = [
+            {
+                q: "Would you rather...",
+                o1: "Cuddle with Shin all day 🥰",
+                o2: "Go on an adventure with Shin 🎉"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Have breakfast in bed made by Shin 🍳",
+                o2: "Cook dinner together with Shin 🍝"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Watch movies with Shin 🎬",
+                o2: "Play games with Shin 🎮"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Get daily good morning texts from Shin ☀️",
+                o2: "Get daily goodnight calls from Shin 🌙"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Dance in the rain with Shin 💃",
+                o2: "Stargaze with Shin ✨"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Get surprise gifts from Shin 🎁",
+                o2: "Get surprise dates from Shin 💕"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Have Shin sing to you 🎵",
+                o2: "Have Shin write you poems 📝"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Go on a beach vacation with Shin 🏖️",
+                o2: "Go on a mountain trip with Shin 🏔️"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Wear matching outfits with Shin 👕",
+                o2: "Have matching accessories with Shin 💍"
+            },
+            {
+                q: "Would you rather...",
+                o1: "Get tight hugs from Shin 🤗",
+                o2: "Get forehead kisses from Shin 😘"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let selectedOption = null;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionText').textContent = q.q;
+            document.getElementById('option1').textContent = q.o1;
+            document.getElementById('option2').textContent = q.o2;
+            
+            document.getElementById('option1').classList.remove('selected');
+            document.getElementById('option2').classList.remove('selected');
+            selectedOption = null;
+        }
+
+        function selectOption(option) {
+            document.getElementById('option1').classList.remove('selected');
+            document.getElementById('option2').classList.remove('selected');
+            document.getElementById('option' + option).classList.add('selected');
+            selectedOption = option;
+        }
+
+        function nextQuestion() {
+            currentQuestion = (currentQuestion + 1) % questions.length;
+            loadQuestion();
+        }
+
+        function createFloatingHearts() {
+            setInterval(() => {
+                if (Math.random() < 0.35) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
+                    heart.style.fontSize = '16px';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }, 8000);
+                }
+            }, 2500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
+            createFloatingHearts();
+            loadQuestion();
+        });
+    </script>
+</body>
+</html>
