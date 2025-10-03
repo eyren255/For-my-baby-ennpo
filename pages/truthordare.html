@@ -103,9 +103,15 @@
             <a href="game.html" class="nav-link">Games</a>
             <a href="truthordare.html" class="nav-link active">Truth or Dare</a>
             <a href="wouldyourather.html" class="nav-link">Would You Rather</a>
+            <a href="gifts.html" class="nav-link">Gifts</a>
             <a href="secret.html" class="nav-link secret">Secret</a>
         </div>
     </nav>
+    
+    <!-- Share Button (only visible when question is shown) -->
+    <button class="share-btn" id="shareBtn" style="display: none;" onclick="shareQuestion()" title="Share this question">
+        📤
+    </button>
 
     <main class="main">
         <div class="container">
@@ -164,7 +170,22 @@
             "What's the cutest thing Shin has ever done? 🥺",
             "What would you want to tell Shin right now? 💌",
             "What's your favorite nickname Shin calls you? 🍯",
-            "How do you feel when Shin says 'I love you'? 💘"
+            "How do you feel when Shin says 'I love you'? 💘",
+            "What do you dream about when you think of Shin? 😴💕",
+            "Where would you love Shin to kiss you first? 💋",
+            "What's the most romantic thing you want Shin to do? 🌹",
+            "How does Shin make you feel butterflies? 🦋",
+            "What turns you on most about Shin? 🔥",
+            "Describe your perfect date night with Shin 🌙✨",
+            "What's your favorite way Shin touches you? 🥰",
+            "When do you want to kiss Shin the most? 😘",
+            "What makes you blush when Shin does it? 😳",
+            "What's your secret fantasy with Shin? 🙈💭",
+            "How does Shin drive you crazy in a good way? 😏",
+            "What's the sexiest thing about Shin? 🔥💕",
+            "Where do you want Shin's hands right now? 🙊",
+            "What would you whisper in Shin's ear? 💋",
+            "Describe Shin in one naughty word 😈"
         ];
 
         const dares = [
@@ -177,21 +198,59 @@
             "Send Shin your favorite song! 🎵",
             "Tell Shin why he's the best! ⭐",
             "Send Shin a cute voice message! 🎤",
-            "Make a heart with your hands for Shin! 💗"
+            "Make a heart with your hands for Shin! 💗",
+            "Send Shin a flirty text right now! 😏💬",
+            "Blow Shin a kiss through the screen! 💋",
+            "Tell Shin what you're wearing 🙈",
+            "Send Shin a cute wink selfie 😉📸",
+            "Text Shin 'I want you' right now 🔥",
+            "Tell Shin your favorite place to be kissed 💋",
+            "Send Shin 10 kissing emojis! 😘😘😘",
+            "Tell Shin what you want to do tonight 🌙",
+            "Describe how you'd kiss Shin right now 💕",
+            "Send Shin a message saying you need him 😍",
+            "Tell Shin where you want to be touched 🥰",
+            "Call Shin and say something sexy 📞🔥",
+            "Send Shin a photo of your lips 💋📸",
+            "Text Shin your biggest turn on 😳",
+            "Tell Shin you're thinking naughty thoughts 😈"
         ];
+
+        let currentQuestion = '';
+        let currentType = '';
 
         function showQuestion(type) {
             const questions = type === 'truth' ? truths : dares;
             const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
             
+            currentQuestion = randomQuestion;
+            currentType = type;
+            
             document.getElementById('questionText').textContent = randomQuestion;
             document.getElementById('choiceSection').style.display = 'none';
             document.getElementById('questionCard').style.display = 'flex';
+            document.getElementById('shareBtn').style.display = 'flex';
         }
 
         function backToChoice() {
             document.getElementById('choiceSection').style.display = 'block';
             document.getElementById('questionCard').style.display = 'none';
+            document.getElementById('shareBtn').style.display = 'none';
+        }
+
+        function shareQuestion() {
+            const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Truth or Dare 💘',
+                    text: text,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Question copied to clipboard! 📋');
+                });
+            }
         }
 
         function createFloatingHearts() {

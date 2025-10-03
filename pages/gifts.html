@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Gifts 🎁</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gift-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .gift-emoji {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            animation: float-gift 3s ease-in-out infinite;
+        }
+
+        @keyframes float-gift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gift-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .gift-sent {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--bg-secondary);
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 10px 40px var(--shadow);
+            z-index: 2000;
+            text-align: center;
+            animation: popup 0.5s ease-out forwards;
+        }
+
+        @keyframes popup {
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .gift-sent-emoji {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .gift-sent-text {
+            font-family: 'Kalam', cursive;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .gift-sent-message {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .sent-count {
+            background: var(--accent);
+            color: white;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            margin: 2rem 0;
+            display: inline-block;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link">Notes</a>
+            <a href="game.html" class="nav-link">Games</a>
+            <a href="truthordare.html" class="nav-link">Truth or Dare</a>
+            <a href="wouldyourather.html" class="nav-link">Would You Rather</a>
+            <a href="gifts.html" class="nav-link active">Gifts</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <h1 class="title">Virtual Gifts for Shin 🎁</h1>
+            <p class="subtitle">Send some love to Shin!</p>
+
+            <div class="sent-count" id="sentCount">0 gifts sent today! 💝</div>
+
+            <div class="gifts-grid">
+                <div class="gift-card" onclick="sendGift('💐', 'Flowers', 'Beautiful flowers for the most beautiful person!')">
+                    <span class="gift-emoji">💐</span>
+                    <div class="gift-name">Flowers</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🍫', 'Chocolate', 'Sweet chocolate for my sweetheart!')">
+                    <span class="gift-emoji">🍫</span>
+                    <div class="gift-name">Chocolate</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('💋', 'Kiss', 'A sweet kiss just for you!')">
+                    <span class="gift-emoji">💋</span>
+                    <div class="gift-name">Kiss</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🌹', 'Rose', 'A rose for my love!')">
+                    <span class="gift-emoji">🌹</span>
+                    <div class="gift-name">Rose</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🍰', 'Cake', 'Sweet cake for my sweetie!')">
+                    <span class="gift-emoji">🍰</span>
+                    <div class="gift-name">Cake</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('☕', 'Coffee', 'Coffee date with you!')">
+                    <span class="gift-emoji">☕</span>
+                    <div class="gift-name">Coffee</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('💝', 'Love Letter', 'A letter full of love!')">
+                    <span class="gift-emoji">💝</span>
+                    <div class="gift-name">Love Letter</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🎈', 'Balloon', 'To lift your spirits!')">
+                    <span class="gift-emoji">🎈</span>
+                    <div class="gift-name">Balloon</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🧸', 'Teddy Bear', 'Cuddly teddy bear hug!')">
+                    <span class="gift-emoji">🧸</span>
+                    <div class="gift-name">Teddy Bear</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('💎', 'Diamond', 'You are precious to me!')">
+                    <span class="gift-emoji">💎</span>
+                    <div class="gift-name">Diamond</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🌟', 'Star', 'You are my shining star!')">
+                    <span class="gift-emoji">🌟</span>
+                    <div class="gift-name">Star</div>
+                </div>
+
+                <div class="gift-card" onclick="sendGift('🤗', 'Hug', 'A warm virtual hug!')">
+                    <span class="gift-emoji">🤗</span>
+                    <div class="gift-name">Hug</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const heartsContainer = document.getElementById('heartsContainer');
+        const sentCountEl = document.getElementById('sentCount');
+
+        let giftsToday = parseInt(localStorage.getItem('giftsToday') || '0');
+        updateGiftCount();
+
+        function initDarkMode() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
+        function sendGift(emoji, name, message) {
+            giftsToday++;
+            localStorage.setItem('giftsToday', giftsToday);
+            updateGiftCount();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            document.body.appendChild(overlay);
+
+            const popup = document.createElement('div');
+            popup.className = 'gift-sent';
+            popup.innerHTML = `
+                <div class="gift-sent-emoji">${emoji}</div>
+                <div class="gift-sent-text">Gift Sent!</div>
+                <div class="gift-sent-message">${message}</div>
+                <button class="close-modal-btn" style="margin-top: 1rem;" onclick="shareGift('${emoji}', '${name}')">
+                    Share Gift 📤
+                </button>
+            `;
+            document.body.appendChild(popup);
+
+            createGiftExplosion(emoji);
+
+            setTimeout(() => {
+                popup.remove();
+                overlay.remove();
+            }, 3000);
+        }
+
+        function shareGift(emoji, name) {
+            const text = `${emoji} I'm sending ${name} to my love! 💖`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Virtual Gift 🎁',
+                    text: text,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Gift message copied! 📋');
+                });
+            }
+        }
+
+        function createGiftExplosion(emoji) {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const gift = document.createElement('div');
+                    gift.textContent = emoji;
+                    gift.style.position = 'fixed';
+                    gift.style.left = '50%';
+                    gift.style.top = '50%';
+                    gift.style.fontSize = '2rem';
+                    gift.style.zIndex = '2001';
+                    gift.style.pointerEvents = 'none';
+                    gift.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+                    document.body.appendChild(gift);
+
+                    setTimeout(() => {
+                        const angle = (i / 15) * Math.PI * 2;
+                        const distance = 100 + Math.random() * 100;
+                        const endX = Math.cos(angle) * distance;
+                        const endY = Math.sin(angle) * distance;
+
+                        gift.style.transform = `translate(${endX}px, ${endY}px) scale(0.3) rotate(${Math.random() * 720}deg)`;
+                        gift.style.opacity = '0';
+                    }, 50);
+
+                    setTimeout(() => {
+                        gift.remove();
+                    }, 1100);
+                }, i * 30);
+            }
+        }
+
+        function updateGiftCount() {
+            sentCountEl.textContent = `${giftsToday} gift${giftsToday !== 1 ? 's' : ''} sent today! 💝`;
+        }
+
+        function createFloatingHearts() {
+            setInterval(() => {
+                if (Math.random() < 0.35) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
+                    heart.style.fontSize = '16px';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }, 8000);
+                }
+            }, 2500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
+            createFloatingHearts();
+        });
+    </script>
+</body>
+</html>

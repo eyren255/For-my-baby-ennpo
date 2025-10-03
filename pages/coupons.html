@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Coupons 💝</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .coupon-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .coupon-card {
+            background: rgba(45, 45, 45, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .coupon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--accent), #ff8fc7);
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .coupon-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .coupon-title {
+            font-family: 'Kalam', cursive;
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .coupon-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .custom-coupon-section {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body.dark-mode .custom-coupon-section {
+            background: rgba(45, 45, 45, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .custom-input {
+            background: rgba(45, 45, 45, 0.5);
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
+        }
+
+        .create-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .create-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .coupon-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: popup 0.4s ease-out forwards;
+        }
+
+        body.dark-mode .coupon-modal {
+            background: rgba(45, 45, 45, 0.95);
+        }
+
+        .modal-emoji {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-family: 'Kalam', cursive;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .modal-desc {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .close-modal-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal-btn:hover {
+            background: var(--accent-light);
+            transform: scale(1.05);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-tab {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        body.dark-mode .category-tab {
+            background: rgba(45, 45, 45, 0.5);
+        }
+
+        .category-tab.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .category-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+    
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-link">🏠 Home</a>
+            <a href="notes.html" class="nav-link">📝 Notes</a>
+            <a href="game.html" class="nav-link">🎮 Games</a>
+            <a href="truthordare.html" class="nav-link">💘 Truth/Dare</a>
+            <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
+            <a href="gifts.html" class="nav-link">🎁 Gifts</a>
+            <a href="coupons.html" class="nav-link active">🎫 Coupons</a>
+            <a href="secret.html" class="nav-link secret">🔐 Secret</a>
+        </div>
+    </nav>
+
+    <button class="share-btn" onclick="shareWebsite()" title="Share this page">
+        📤
+    </button>
+
+    <main class="main">
+        <div class="container">
+            <h1 class="title">Love Coupons 💝</h1>
+            <p class="subtitle">Choose or create a special coupon for Shin!</p>
+
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="filterCategory('all')">All</button>
+                <button class="category-tab" onclick="filterCategory('cute')">Cute 🥰</button>
+                <button class="category-tab" onclick="filterCategory('flirty')">Flirty 😏</button>
+                <button class="category-tab" onclick="filterCategory('sexy')">Sexy 🔥</button>
+            </div>
+
+            <div class="coupons-grid" id="couponsGrid"></div>
+
+            <div class="custom-coupon-section">
+                <h2 class="title" style="font-size: 1.8rem;">Create Custom Coupon ✨</h2>
+                <input type="text" class="custom-input" id="customTitle" placeholder="Coupon Title (e.g., Cuddle Time)">
+                <textarea class="custom-input" id="customDesc" placeholder="Description..." rows="3"></textarea>
+                <input type="text" class="custom-input" id="customEmoji" placeholder="Emoji (e.g., 💕)" maxlength="2">
+                <button class="create-btn" onclick="createCustomCoupon()">Create Coupon 🎫</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const heartsContainer = document.getElementById('heartsContainer');
+
+        function initDarkMode() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            themeIcon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        function shareWebsite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Love Coupons 💝',
+                    text: 'Check out these romantic coupons!',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copied! 📋');
+                });
+            }
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+
+        const coupons = [
+            { emoji: '💋', title: 'Passionate Kiss', desc: 'A deep, passionate kiss for 5 minutes', category: 'sexy' },
+            { emoji: '😘', title: 'French Kiss', desc: 'Intimate French kiss session', category: 'sexy' },
+            { emoji: '💏', title: 'Kiss for 10 Minutes', desc: 'Non-stop kissing for 10 whole minutes!', category: 'flirty' },
+            { emoji: '🔥', title: 'Hot Make Out', desc: 'Steamy make out session', category: 'sexy' },
+            { emoji: '🛏️', title: 'Intimate Time', desc: 'Special intimate time together', category: 'sexy' },
+            { emoji: '🤗', title: 'Cuddle Session', desc: '30 minutes of warm cuddles', category: 'cute' },
+            { emoji: '💆', title: 'Sensual Massage', desc: 'Relaxing massage with love', category: 'flirty' },
+            { emoji: '🌹', title: 'Romantic Bath', desc: 'Bath together with rose petals', category: 'flirty' },
+            { emoji: '🎬', title: 'Movie Cuddles', desc: 'Movie night with lots of cuddles', category: 'cute' },
+            { emoji: '🍫', title: 'Body Chocolate', desc: 'Feed each other chocolate sensually', category: 'flirty' },
+            { emoji: '👄', title: 'Kiss Anywhere', desc: 'Kiss me anywhere you want', category: 'sexy' },
+            { emoji: '🌙', title: 'Midnight Adventure', desc: 'Late night fun together', category: 'flirty' },
+            { emoji: '💃', title: 'Slow Dance', desc: 'Slow dance together, close and tight', category: 'cute' },
+            { emoji: '🎮', title: 'Loser Strips', desc: 'Game night where loser strips', category: 'sexy' },
+            { emoji: '📸', title: 'Photoshoot', desc: 'Private photoshoot session', category: 'flirty' },
+            { emoji: '🍓', title: 'Strawberry Kisses', desc: 'Feed each other strawberries with kisses', category: 'cute' },
+            { emoji: '💝', title: 'Love Letter', desc: 'Write me a steamy love letter', category: 'flirty' },
+            { emoji: '🎵', title: 'Shower Duet', desc: 'Sing and shower together', category: 'flirty' },
+            { emoji: '🌟', title: 'Anything Goes', desc: 'I do whatever you want for 1 hour', category: 'sexy' },
+            { emoji: '🥰', title: 'Breakfast in Bed', desc: 'Made with love and served with kisses', category: 'cute' }
+        ];
+
+        let currentFilter = 'all';
+
+        function renderCoupons() {
+            const grid = document.getElementById('couponsGrid');
+            const filtered = currentFilter === 'all' 
+                ? coupons 
+                : coupons.filter(c => c.category === currentFilter);
+            
+            grid.innerHTML = filtered.map(coupon => `
+                <div class="coupon-card" onclick='showCoupon(${JSON.stringify(coupon)})'>
+                    <span class="coupon-emoji">${coupon.emoji}</span>
+                    <div class="coupon-title">${coupon.title}</div>
+                    <div class="coupon-desc">${coupon.desc}</div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(category) {
+            currentFilter = category;
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderCoupons();
+        }
+
+        function showCoupon(coupon) {
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            overlay.onclick = () => {
+                modal.remove();
+                overlay.remove();
+            };
+            
+            const modal = document.createElement('div');
+            modal.className = 'coupon-modal';
+            modal.innerHTML = `
+                <div class="modal-emoji">${coupon.emoji}</div>
+                <div class="modal-title">${coupon.title}</div>
+                <div class="modal-desc">${coupon.desc}</div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button class="close-modal-btn" onclick="shareCoupon('${coupon.emoji}', '${coupon.title}', '${coupon.desc}')">
+                        Share 📤
+                    </button>
+                    <button class="close-modal-btn" onclick="this.parentElement.parentElement.remove(); document.querySelector('.overlay').remove()">
+                        Redeem 💖
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+            
+            createCouponExplosion(coupon.emoji);
+        }
+
+        function shareCoupon(emoji, title, desc) {
+            const text = `${emoji} Love Coupon: ${title}\n${desc} 💝`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Love Coupon 💝',
+                    text: text,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Coupon copied! 📋');
+                });
+            }
+        }
+
+        function createCustomCoupon() {
+            const title = document.getElementById('customTitle').value;
+            const desc = document.getElementById('customDesc').value;
+            const emoji = document.getElementById('customEmoji').value || '💖';
+            
+            if (!title || !desc) {
+                alert('Please fill in title and description!');
+                return;
+            }
+            
+            showCoupon({ emoji, title, desc });
+            
+            document.getElementById('customTitle').value = '';
+            document.getElementById('customDesc').value = '';
+            document.getElementById('customEmoji').value = '';
+        }
+
+        function createCouponExplosion(emoji) {
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.textContent = emoji;
+                    el.style.position = 'fixed';
+                    el.style.left = '50%';
+                    el.style.top = '50%';
+                    el.style.fontSize = '2rem';
+                    el.style.zIndex = '2001';
+                    el.style.pointerEvents = 'none';
+                    el.style.transition = 'all 1s ease-out';
+                    
+                    document.body.appendChild(el);
+                    
+                    setTimeout(() => {
+                        const angle = (i / 12) * Math.PI * 2;
+                        const distance = 100 + Math.random() * 100;
+                        const endX = Math.cos(angle) * distance;
+                        const endY = Math.sin(angle) * distance;
+                        
+                        el.style.transform = `translate(${endX}px, ${endY}px) rotate(${Math.random() * 720}deg)`;
+                        el.style.opacity = '0';
+                    }, 50);
+                    
+                    setTimeout(() => el.remove(), 1100);
+                }, i * 30);
+            }
+        }
+
+        function createFloatingHearts() {
+            setInterval(() => {
+                if (Math.random() < 0.35) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
+                    heart.style.fontSize = '16px';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }, 8000);
+                }
+            }, 2500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
+            createFloatingHearts();
+            renderCoupons();
+        });
+    </script>
+</body>
+</html>

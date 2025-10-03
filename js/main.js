@@ -284,6 +284,42 @@ function createConfetti() {
     }
 }
 
+// Share functionality
+function shareWebsite() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'For My Baby Ennpo 💖',
+            text: 'Check out this cute website Shin made for Ennpo!',
+            url: window.location.href
+        }).catch(() => {});
+    } else {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Link copied to clipboard! 📋');
+        });
+    }
+}
+
+// Create sparkles animation
+function createSparkles() {
+    setInterval(() => {
+        if (Math.random() < 0.2) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                if (sparkle.parentNode) {
+                    sparkle.parentNode.removeChild(sparkle);
+                }
+            }, 3000);
+        }
+    }, 500);
+}
+
 // Add confetti animation to CSS dynamically
 const style = document.createElement('style');
 style.textContent = `
@@ -298,6 +334,9 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Start sparkles
+createSparkles();
 
 // Add some fun hover effects
 document.addEventListener('DOMContentLoaded', function() {
