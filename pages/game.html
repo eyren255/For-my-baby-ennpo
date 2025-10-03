@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Game - Who Loves Who More? 💕</title>
+    <meta name="description" content="A fun game to see who loves who more!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .game-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--pink);
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .question {
+            font-family: 'Kalam', cursive;
+            font-size: 2rem;
+            color: var(--purple);
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option-btn {
+            background: linear-gradient(45deg, var(--pink), var(--lavender));
+            color: var(--purple);
+            border: none;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .option-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .option-emoji {
+            font-size: 2.5rem;
+        }
+        
+        .result {
+            font-family: 'Kalam', cursive;
+            font-size: 1.8rem;
+            color: var(--dark-pink);
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 15px;
+            border: 2px solid var(--pink);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .result.correct {
+            background: rgba(144, 238, 144, 0.3);
+            border-color: #90EE90;
+            color: #228B22;
+        }
+        
+        .result.wrong {
+            background: rgba(255, 182, 193, 0.3);
+            border-color: #FFB6C1;
+            color: #DC143C;
+        }
+        
+        .play-again-btn {
+            background: linear-gradient(45deg, var(--dark-pink), var(--purple));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px var(--shadow);
+            margin: 1rem auto;
+            display: none;
+        }
+        
+        .play-again-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        
+        .play-again-btn.show {
+            display: block;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--purple);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: var(--pink);
+            transform: translateY(-2px);
+        }
+        
+        .score {
+            font-size: 1.2rem;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .question {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link">Notes</a>
+            <a href="game.html" class="nav-link active">Game</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
+        </div>
+    </nav>
+    
+    <!-- Back button -->
+    <a href="../index.html" class="back-btn">← Back</a>
+
+    <!-- Main content -->
+    <main class="main">
+        <div class="container">
+            <h1 class="title">Who Loves Who More? 💕</h1>
+            <p class="subtitle">Choose your answer and see if you're right!</p>
+            
+            <div class="game-container">
+                <div class="score" id="score">Score: 0/0</div>
+                
+                <div class="game-card">
+                    <div class="question" id="question">Who loves who more?</div>
+                    
+                    <div class="options">
+                        <button class="option-btn" id="shinBtn">
+                            <div class="option-emoji">🐻</div>
+                            <div>Shin loves Ennpo</div>
+                        </button>
+                        <button class="option-btn" id="ennpoBtn">
+                            <div class="option-emoji">💖</div>
+                            <div>Ennpo loves Shin</div>
+                        </button>
+                    </div>
+                    
+                    <div class="result" id="result"></div>
+                    
+                    <button class="play-again-btn" id="playAgainBtn">Play Again! 🎮</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Console logs for game page
+        console.log("🎮 Love game loaded! Time to see who loves who more! 🎮");
+        console.log("💕 Spoiler alert: Shin always wins! 💕");
+        console.log("🐻 Shin loves Ennpo more than words can express! 🐻");
+        
+        // Game state
+        let gameStarted = false;
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+        
+        // DOM elements
+        const question = document.getElementById('question');
+        const shinBtn = document.getElementById('shinBtn');
+        const ennpoBtn = document.getElementById('ennpoBtn');
+        const result = document.getElementById('result');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const score = document.getElementById('score');
+        const heartsContainer = document.getElementById('heartsContainer');
+        
+        // Questions array
+        const questions = [
+            "Who loves who more?",
+            "Who thinks about the other more?",
+            "Who gets more excited to see the other?",
+            "Who misses the other more when apart?",
+            "Who is more romantic?",
+            "Who cares more about making the other happy?",
+            "Who loves the other's smile more?",
+            "Who wants to spend more time together?",
+            "Who is more protective?",
+            "Who loves the other unconditionally more?"
+        ];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingHearts();
+            setupGame();
+        });
+        
+        // Create floating hearts
+        function createFloatingHearts() {
+            setInterval(() => {
+                if (Math.random() < 0.2) {
+                    createHeart();
+                }
+            }, 3000);
+        }
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 7000);
+        }
+        
+        // Set up game
+        function setupGame() {
+            shinBtn.addEventListener('click', () => handleAnswer(true));
+            ennpoBtn.addEventListener('click', () => handleAnswer(false));
+            playAgainBtn.addEventListener('click', resetGame);
+            
+            // Start with first question
+            nextQuestion();
+        }
+        
+        // Handle answer selection
+        function handleAnswer(selectedShin) {
+            if (gameStarted) return;
+            
+            gameStarted = true;
+            totalQuestions++;
+            
+            // Shin always wins (correct answer is always true)
+            const isCorrect = selectedShin;
+            
+            if (isCorrect) {
+                correctAnswers++;
+                showResult("Correct ✅ Shin loves Ennpo more! 💖", "correct");
+                console.log("🎉 Correct answer! Shin loves Ennpo more! 🎉");
+            } else {
+                showResult("Wrong ❌ Shin loves Ennpo more! Try again! 😊", "wrong");
+                console.log("😅 Wrong answer! Shin always loves Ennpo more! 😅");
+            }
+            
+            updateScore();
+            showPlayAgainButton();
+        }
+        
+        // Show result
+        function showResult(message, type) {
+            result.textContent = message;
+            result.className = `result show ${type}`;
+            
+            // Create celebration effect
+            if (type === 'correct') {
+                createCelebrationEffect();
+            }
+        }
+        
+        // Create celebration effect for correct answers
+        function createCelebrationEffect() {
+            const colors = ['💖', '💕', '💗', '💝', '💘', '💞', '🎉', '✨'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.textContent = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.top = '-50px';
+                    confetti.style.fontSize = '25px';
+                    confetti.style.animation = 'confetti 3s ease-out forwards';
+                    confetti.style.zIndex = '1000';
+                    confetti.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+        
+        // Update score display
+        function updateScore() {
+            score.textContent = `Score: ${correctAnswers}/${totalQuestions}`;
+        }
+        
+        // Show play again button
+        function showPlayAgainButton() {
+            playAgainBtn.classList.add('show');
+        }
+        
+        // Reset game for next question
+        function resetGame() {
+            gameStarted = false;
+            result.classList.remove('show');
+            playAgainBtn.classList.remove('show');
+            nextQuestion();
+        }
+        
+        // Go to next question
+        function nextQuestion() {
+            const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+            question.textContent = randomQuestion;
+            
+            // Reset button states
+            shinBtn.disabled = false;
+            ennpoBtn.disabled = false;
+        }
+        
+        // Add confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confetti {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add some fun hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const optionBtns = document.querySelectorAll('.option-btn');
+            optionBtns.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    if (!gameStarted) {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

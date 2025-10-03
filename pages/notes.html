@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Notes for Ennpo 💕</title>
+    <meta name="description" content="Random sweet and teasing notes for Ennpo">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .notes-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .note-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--pink);
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .note-text {
+            font-family: 'Kalam', cursive;
+            font-size: 1.5rem;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .note-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .new-note-btn {
+            background: linear-gradient(45deg, var(--dark-pink), var(--purple));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px var(--shadow);
+            margin: 1rem auto;
+            display: block;
+        }
+        
+        .new-note-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--purple);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: var(--pink);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link active">Notes</a>
+            <a href="game.html" class="nav-link">Game</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
+        </div>
+    </nav>
+    
+    <!-- Back button -->
+    <a href="../index.html" class="back-btn">← Back</a>
+
+    <!-- Main content -->
+    <main class="main">
+        <div class="container">
+            <h1 class="title">Sweet Notes for Ennpo 💕</h1>
+            <p class="subtitle">Click the button for a random sweet message!</p>
+            
+            <div class="notes-container">
+                <div class="note-card" id="noteCard">
+                    <div class="note-emoji" id="noteEmoji">💖</div>
+                    <div class="note-text" id="noteText">Click the button below to get a sweet note!</div>
+                </div>
+                
+                <button class="new-note-btn" id="newNoteBtn">
+                    <span class="heart">💝</span>
+                    Get a New Note
+                    <span class="heart">💝</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Console logs for notes page
+        console.log("📝 Sweet notes page loaded! Time to make Ennpo smile! 📝");
+        console.log("💕 Every note is written with love from Shin 💕");
+        
+        // Sweet and teasing notes
+        const notes = [
+            { text: "You're too cute for words! 😘", emoji: "😍" },
+            { text: "Caught you blushing again! 😏", emoji: "😊" },
+            { text: "Your smile makes my day brighter! ☀️", emoji: "✨" },
+            { text: "I love how you laugh at my silly jokes! 😂", emoji: "🤣" },
+            { text: "You're my favorite person in the whole world! 🌍", emoji: "💖" },
+            { text: "Your hugs are the best medicine! 🤗", emoji: "💊" },
+            { text: "I love how you always know what to say! 💬", emoji: "🗣️" },
+            { text: "You make even the boring stuff fun! 🎉", emoji: "🎊" },
+            { text: "I love your little quirks and habits! 😄", emoji: "🦄" },
+            { text: "You're my sunshine on cloudy days! ☁️", emoji: "☀️" },
+            { text: "I love how you care about everyone! 💝", emoji: "👼" },
+            { text: "Your voice is my favorite sound! 🎵", emoji: "🎶" },
+            { text: "I love how you make me feel special! ⭐", emoji: "🌟" },
+            { text: "You're the best girlfriend ever! 🏆", emoji: "🥇" },
+            { text: "I love your beautiful eyes! 👀", emoji: "😍" },
+            { text: "You make my heart skip a beat! 💓", emoji: "💗" },
+            { text: "I love how you always support me! 🤝", emoji: "💪" },
+            { text: "You're my perfect match! 🧩", emoji: "💕" },
+            { text: "I love your creative ideas! 💡", emoji: "🎨" },
+            { text: "You make every day an adventure! 🗺️", emoji: "🚀" },
+            { text: "I love how you understand me! 🤗", emoji: "💞" },
+            { text: "You're my favorite notification! 📱", emoji: "💌" },
+            { text: "I love your silly faces! 😜", emoji: "🤪" },
+            { text: "You make me want to be a better person! 🌱", emoji: "🌿" },
+            { text: "I love how you make me laugh! 😂", emoji: "🤣" },
+            { text: "You're my happy place! 🏖️", emoji: "🌴" },
+            { text: "I love your beautiful soul! ✨", emoji: "👼" },
+            { text: "You make my dreams come true! 🌙", emoji: "⭐" },
+            { text: "I love how you always believe in me! 🎯", emoji: "🏹" },
+            { text: "You're my forever and always! ♾️", emoji: "💖" }
+        ];
+        
+        // DOM elements
+        const noteCard = document.getElementById('noteCard');
+        const noteText = document.getElementById('noteText');
+        const noteEmoji = document.getElementById('noteEmoji');
+        const newNoteBtn = document.getElementById('newNoteBtn');
+        const heartsContainer = document.getElementById('heartsContainer');
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingHearts();
+            setupNewNoteButton();
+        });
+        
+        // Create floating hearts
+        function createFloatingHearts() {
+            setInterval(() => {
+                if (Math.random() < 0.2) {
+                    createHeart();
+                }
+            }, 3000);
+        }
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 7000);
+        }
+        
+        // Set up new note button
+        function setupNewNoteButton() {
+            newNoteBtn.addEventListener('click', showNewNote);
+        }
+        
+        // Show a new random note
+        function showNewNote() {
+            const randomNote = notes[Math.floor(Math.random() * notes.length)];
+            
+            // Add animation effect
+            noteCard.style.transform = 'scale(0.95)';
+            noteCard.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                noteText.textContent = randomNote.text;
+                noteEmoji.textContent = randomNote.emoji;
+                
+                noteCard.style.transform = 'scale(1)';
+                noteCard.style.opacity = '1';
+                
+                // Create burst effect
+                createBurstEffect();
+                
+                // Console log
+                console.log(`💌 New note: "${randomNote.text}" 💌`);
+            }, 200);
+        }
+        
+        // Create burst effect
+        function createBurstEffect() {
+            const rect = noteCard.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.textContent = '💕';
+                    heart.style.position = 'fixed';
+                    heart.style.left = centerX + 'px';
+                    heart.style.top = centerY + 'px';
+                    heart.style.fontSize = '20px';
+                    heart.style.animation = 'burst 1s ease-out forwards';
+                    heart.style.zIndex = '1000';
+                    
+                    const angle = (i / 6) * Math.PI * 2;
+                    const distance = 40 + Math.random() * 20;
+                    const endX = centerX + Math.cos(angle) * distance;
+                    const endY = centerY + Math.sin(angle) * distance;
+                    
+                    heart.style.setProperty('--end-x', endX + 'px');
+                    heart.style.setProperty('--end-y', endY + 'px');
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.parentNode.removeChild(heart);
+                        }
+                    }, 1000);
+                }, i * 100);
+            }
+        }
+        
+        // Add burst animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes burst {
+                0% { transform: translate(0, 0) scale(1); opacity: 1; }
+                100% { transform: translate(var(--end-x, 0), var(--end-y, 0)) scale(0.5); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
