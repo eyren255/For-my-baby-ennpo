@@ -510,13 +510,22 @@ function shareResult(content, type = 'result') {
         const couponLine = lines[0]; // Contains emoji and title
         const descLine = lines[1]; // Contains description
         
-        // Extract just the title part (after the emoji)
-        const titleMatch = couponLine.match(/^(.+?)\s+(.+)$/);
+        console.log('Coupon content:', content);
+        console.log('Coupon line:', couponLine);
+        console.log('Description line:', descLine);
+        
+        // Extract emoji and title from the coupon line
+        const titleMatch = couponLine.match(/^(.+?)\s+Love Coupon:\s+(.+)$/);
         const emoji = titleMatch ? titleMatch[1] : '💝';
-        const titleText = titleMatch ? titleMatch[2].replace('Love Coupon: ', '') : couponLine.replace('Love Coupon: ', '');
+        const titleText = titleMatch ? titleMatch[2] : couponLine.replace(/^.+?\s+Love Coupon:\s+/, '');
+        
+        console.log('Extracted emoji:', emoji);
+        console.log('Extracted title:', titleText);
         
         text = `💕 I'm sending you a special love coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💖 Redeem this anytime, my love! From your sweetheart Ennpo 💕`;
         title = '💝 Love Coupon from Ennpo';
+        
+        console.log('Final share text:', text);
     } else if (type === 'game') {
         // Extract game result and make it personal
         const resultText = content.replace('\n\nFrom Ennpo\'s love game 💕', '');
