@@ -3,6 +3,48 @@ console.log("💖 Ennpo is the cutest girlfriend ever! 💖");
 console.log("🐻 Shin always wins at love games 😏");
 console.log("✨ This website is made with lots of love ✨");
 
+// Automatic cache-busting functionality
+function initCacheBusting() {
+    // Add cache-busting parameters to all internal links
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+            const url = new URL(href, window.location.origin);
+            url.searchParams.set('v', Date.now());
+            link.setAttribute('href', url.toString());
+        }
+    });
+    
+    // Add cache-busting to form submissions
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function() {
+            const action = this.getAttribute('action');
+            if (action && !action.startsWith('http')) {
+                const url = new URL(action, window.location.origin);
+                url.searchParams.set('v', Date.now());
+                this.setAttribute('action', url.toString());
+            }
+        });
+    });
+    
+    // Force reload CSS and JS files periodically
+    setInterval(() => {
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('http')) {
+                const url = new URL(href, window.location.origin);
+                url.searchParams.set('v', Date.now());
+                link.setAttribute('href', url.toString());
+            }
+        });
+    }, 30000); // Check every 30 seconds
+    
+    console.log('🔄 Cache-busting functionality initialized!');
+}
+
 // DOM elements
 const greetingTitle = document.getElementById('greetingTitle');
 const loveBtn = document.getElementById('loveBtn');
@@ -121,6 +163,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize dark mode
     initDarkMode();
+    
+    // Initialize cache-busting
+    initCacheBusting();
     
     // Animate greeting (only on home page)
     animateGreeting();
@@ -515,7 +560,21 @@ function shareResult(content, type = 'result') {
         const emoji = titleMatch ? titleMatch[1] : '💝';
         const titleText = titleMatch ? titleMatch[2] : couponLine.replace(/^.+?\s+Love Coupon:\s+/, '');
         
-        text = `💕 I'm sending you a special love coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💖 Redeem this anytime, my love! From your sweetheart Ennpo 💕`;
+        // Create personalized message based on the specific coupon
+        let personalizedMessage = '';
+        if (titleText.toLowerCase().includes('kiss')) {
+            personalizedMessage = `💋 I'm sending you a special kiss coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💕 Use this whenever you want a sweet kiss from me! From your loving Ennpo 💋`;
+        } else if (titleText.toLowerCase().includes('cuddle')) {
+            personalizedMessage = `🤗 I'm sending you a cuddle coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💕 Perfect for when you need some warm cuddles! From your cuddly Ennpo 🤗`;
+        } else if (titleText.toLowerCase().includes('massage')) {
+            personalizedMessage = `💆 I'm sending you a relaxing massage coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💕 Let me help you relax and feel good! From your caring Ennpo 💆`;
+        } else if (titleText.toLowerCase().includes('dance')) {
+            personalizedMessage = `💃 I'm sending you a dance coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💕 Let's dance together and have fun! From your dancing Ennpo 💃`;
+        } else {
+            personalizedMessage = `💕 I'm sending you a special love coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💖 Redeem this anytime, my love! From your sweetheart Ennpo 💕`;
+        }
+        
+        text = personalizedMessage;
         title = '💝 Love Coupon from Ennpo';
     } else if (type === 'game') {
         // Extract game result and make it personal
@@ -525,12 +584,34 @@ function shareResult(content, type = 'result') {
     } else if (type === 'truth') {
         // Extract truth question and make it personal
         const questionText = content.replace(/^Truth:\s*/, '');
-        text = `💭 I have a truth question for you!\n\n${questionText}\n\n💕 From Ennpo's romantic website 💖`;
+        
+        // Create personalized message based on the question content
+        let personalizedMessage = '';
+        if (questionText.toLowerCase().includes('love') || questionText.toLowerCase().includes('shin')) {
+            personalizedMessage = `💭 I have a special truth question for you, my love!\n\n${questionText}\n\n💕 I'm curious to know your answer! From your curious Ennpo 💭`;
+        } else if (questionText.toLowerCase().includes('first') || questionText.toLowerCase().includes('when')) {
+            personalizedMessage = `💭 I want to know more about you!\n\n${questionText}\n\n💕 Share your thoughts with me! From your curious Ennpo 💭`;
+        } else {
+            personalizedMessage = `💭 I have a truth question for you!\n\n${questionText}\n\n💕 Be honest with me! From your curious Ennpo 💭`;
+        }
+        
+        text = personalizedMessage;
         title = '💭 Truth Question from Ennpo';
     } else if (type === 'dare') {
         // Extract dare challenge and make it personal
         const dareText = content.replace(/^Dare:\s*/, '');
-        text = `💘 I dare you to do this!\n\n${dareText}\n\n💕 From Ennpo's romantic website 💖`;
+        
+        // Create personalized message based on the dare content
+        let personalizedMessage = '';
+        if (dareText.toLowerCase().includes('kiss') || dareText.toLowerCase().includes('hug')) {
+            personalizedMessage = `💘 I dare you to do this sweet thing!\n\n${dareText}\n\n💕 I can't wait to see you do it! From your daring Ennpo 💘`;
+        } else if (dareText.toLowerCase().includes('dance') || dareText.toLowerCase().includes('sing')) {
+            personalizedMessage = `💘 I dare you to show me your moves!\n\n${dareText}\n\n💕 I want to see your talent! From your encouraging Ennpo 💘`;
+        } else {
+            personalizedMessage = `💘 I dare you to do this!\n\n${dareText}\n\n💕 I believe you can do it! From your supportive Ennpo 💘`;
+        }
+        
+        text = personalizedMessage;
         title = '💘 Dare Challenge from Ennpo';
     } else if (type === 'gift') {
         // Extract gift details and make it personal
@@ -543,7 +624,19 @@ function shareResult(content, type = 'result') {
         const emoji = titleMatch ? titleMatch[1] : '🎁';
         const giftName = titleMatch ? titleMatch[2] : giftLine.replace(/^.+?\s+Virtual Gift:\s+/, '');
         
-        text = `🎁 I'm sending you a virtual gift!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 With all my love, Ennpo 💖`;
+        // Create personalized message based on the gift type
+        let personalizedMessage = '';
+        if (giftName.toLowerCase().includes('rose') || giftName.toLowerCase().includes('flower')) {
+            personalizedMessage = `🌹 I'm sending you a beautiful flower!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 Just like you, it's beautiful and special! From your romantic Ennpo 🌹`;
+        } else if (giftName.toLowerCase().includes('heart') || giftName.toLowerCase().includes('love')) {
+            personalizedMessage = `💖 I'm sending you my heart!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 You already have it, but here's a reminder! From your loving Ennpo 💖`;
+        } else if (giftName.toLowerCase().includes('kiss') || giftName.toLowerCase().includes('hug')) {
+            personalizedMessage = `💋 I'm sending you a virtual kiss!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 I wish I could give you a real one! From your affectionate Ennpo 💋`;
+        } else {
+            personalizedMessage = `🎁 I'm sending you a special gift!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 With all my love, Ennpo 💖`;
+        }
+        
+        text = personalizedMessage;
         title = '🎁 Virtual Gift from Ennpo';
     } else {
         text = `${content}\n\n💕 From Ennpo's romantic website 💖`;
