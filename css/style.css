@@ -745,6 +745,7 @@ body.dark-mode .action-btn:hover {
         overflow: hidden;
         opacity: 0;
         transition: all 0.3s ease;
+        z-index: 1000;
     }
     
     body.dark-mode .nav-links {
@@ -753,7 +754,7 @@ body.dark-mode .action-btn:hover {
     }
     
     .nav-links.active {
-        max-height: 500px;
+        max-height: 600px;
         opacity: 1;
     }
     
@@ -762,6 +763,13 @@ body.dark-mode .action-btn:hover {
         justify-content: center;
         padding: 1rem;
         font-size: 1rem;
+        margin-bottom: 0.5rem;
+        display: block;
+        text-align: center;
+    }
+    
+    .nav-link:last-child {
+        margin-bottom: 0;
     }
 }
 
