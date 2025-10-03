@@ -123,27 +123,13 @@
 <body>
     <div class="hearts-container" id="heartsContainer"></div>
     
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
-        <span id="themeIcon">🌙</span>
-    </button>
-    
     <nav class="nav">
         <div class="nav-container">
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="navLinks">
-                <a href="../index.html" class="nav-link">🏠 Home</a>
-                <a href="notes.html" class="nav-link">📝 Notes</a>
-                <a href="game.html" class="nav-link">🎮 Game</a>
-                <a href="truthordare.html" class="nav-link">💘 Fun</a>
-                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
-                <a href="gifts.html" class="nav-link active">🎁 Gifts</a>
-                <a href="coupons.html" class="nav-link">🎫 Coupons</a>
-                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
-            </div>
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link">Notes</a>
+            <a href="game.html" class="nav-link">Game</a>
+            <a href="gifts.html" class="nav-link active">Gifts</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
         </div>
     </nav>
 
@@ -240,8 +226,8 @@
                 <div class="gift-sent-emoji">${emoji}</div>
                 <div class="gift-sent-text">Gift Sent!</div>
                 <div class="gift-sent-message">${message}</div>
-                <button class="close-modal-btn" style="margin-top: 1rem;" onclick="shareGift('${emoji}', '${name}')">
-                    Share Gift 📤
+                <button class="close-modal-btn" style="margin-top: 1rem;" onclick="closeGiftModal()">
+                    Close ✖️
                 </button>
             `;
             document.body.appendChild(popup);
@@ -254,19 +240,8 @@
             }, 3000);
         }
 
-        function shareGift(emoji, name) {
-            const text = `${emoji} I'm sending ${name} to my love! 💖`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Virtual Gift 🎁',
-                    text: text,
-                }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Gift message copied! 📋');
-                });
-            }
+        function closeGiftModal() {
+            document.querySelectorAll('.overlay, .gift-sent').forEach(el => el.remove());
         }
 
         function createGiftExplosion(emoji) {

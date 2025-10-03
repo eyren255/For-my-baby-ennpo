@@ -93,27 +93,13 @@
 <body>
     <div class="hearts-container" id="heartsContainer"></div>
     
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
-        <span id="themeIcon">🌙</span>
-    </button>
-    
     <nav class="nav">
         <div class="nav-container">
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="navLinks">
-                <a href="../index.html" class="nav-link">🏠 Home</a>
-                <a href="notes.html" class="nav-link">📝 Notes</a>
-                <a href="game.html" class="nav-link">🎮 Game</a>
-                <a href="truthordare.html" class="nav-link active">💘 Fun</a>
-                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
-                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
-                <a href="coupons.html" class="nav-link">🎫 Coupons</a>
-                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
-            </div>
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="notes.html" class="nav-link">Notes</a>
+            <a href="game.html" class="nav-link">Game</a>
+            <a href="truthordare.html" class="nav-link active">Truth or Dare</a>
+            <a href="secret.html" class="nav-link secret">Secret</a>
         </div>
     </nav>
     
@@ -140,26 +126,6 @@
                 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
                     <button class="new-question-btn" onclick="backToChoice()">← Back to Choice</button>
                     
-                    <!-- Share Menu -->
-                    <div class="share-menu-container" id="shareMenuContainer">
-                        <button class="share-menu-btn" onclick="toggleShareMenu(event)">
-                            <span>📤</span> Share
-                        </button>
-                        <div class="share-menu-dropdown">
-                            <button class="share-menu-item" onclick="copyToClipboard()">
-                                <span class="share-icon">📋</span>
-                                <span>Copy to Clipboard</span>
-                            </button>
-                            <button class="share-menu-item" onclick="shareToTelegram()">
-                                <span class="share-icon">✈️</span>
-                                <span>Share to Telegram</span>
-                            </button>
-                            <button class="share-menu-item" onclick="shareMore()">
-                                <span class="share-icon">🔗</span>
-                                <span>More Options</span>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -241,53 +207,8 @@
         function backToChoice() {
             document.getElementById('choiceSection').style.display = 'block';
             document.getElementById('questionCard').style.display = 'none';
-            const shareMenu = document.getElementById('shareMenuContainer');
-            if (shareMenu) shareMenu.classList.remove('active');
         }
 
-        function toggleShareMenu(event) {
-            event.stopPropagation();
-            const shareMenu = document.getElementById('shareMenuContainer');
-            shareMenu.classList.toggle('active');
-        }
-
-        function copyToClipboard() {
-            const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard! 📋');
-                document.getElementById('shareMenuContainer').classList.remove('active');
-            });
-        }
-
-        function shareToTelegram() {
-            const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
-            const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
-            window.open(telegramUrl, '_blank');
-            document.getElementById('shareMenuContainer').classList.remove('active');
-        }
-
-        function shareMore() {
-            const text = `${currentType === 'truth' ? 'Truth' : 'Dare'}: ${currentQuestion}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Truth or Dare 💘',
-                    text: text,
-                    url: window.location.href
-                }).catch(() => {});
-            } else {
-                copyToClipboard();
-            }
-            document.getElementById('shareMenuContainer').classList.remove('active');
-        }
-
-        // Close share menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const shareMenu = document.getElementById('shareMenuContainer');
-            if (shareMenu && !shareMenu.contains(e.target)) {
-                shareMenu.classList.remove('active');
-            }
-        });
     </script>
 </body>
 </html>
