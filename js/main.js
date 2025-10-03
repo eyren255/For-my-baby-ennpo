@@ -3,6 +3,87 @@ console.log("💖 Ennpo is the cutest girlfriend ever! 💖");
 console.log("🐻 Shin always wins at love games 😏");
 console.log("✨ This website is made with lots of love ✨");
 
+// Hard refresh functionality
+function addHardRefreshButton() {
+    // Check if refresh button already exists
+    if (document.getElementById('hardRefreshBtn')) return;
+    
+    const refreshBtn = document.createElement('button');
+    refreshBtn.id = 'hardRefreshBtn';
+    refreshBtn.innerHTML = '🔄 Hard Refresh';
+    refreshBtn.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        z-index: 100;
+        background: rgba(255, 105, 180, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        color: white;
+        padding: 0.8rem 1.2rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 105, 180, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        box-shadow: 0 4px 16px rgba(255, 105, 180, 0.3);
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+    `;
+    
+    // Add hover effect
+    refreshBtn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px) scale(1.05)';
+        this.style.boxShadow = '0 8px 24px rgba(255, 105, 180, 0.4)';
+    });
+    
+    refreshBtn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+        this.style.boxShadow = '0 4px 16px rgba(255, 105, 180, 0.3)';
+    });
+    
+    // Add click handler for hard refresh
+    refreshBtn.addEventListener('click', function() {
+        // Show loading animation
+        this.innerHTML = '⏳ Refreshing...';
+        this.style.pointerEvents = 'none';
+        
+        // Hard refresh with cache bypass
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 500);
+    });
+    
+    // Add to page
+    document.body.appendChild(refreshBtn);
+    
+    // Add dark mode support
+    function updateRefreshButtonTheme() {
+        const isDark = document.body.classList.contains('dark-mode');
+        if (isDark) {
+            refreshBtn.style.background = 'rgba(26, 26, 26, 0.9)';
+            refreshBtn.style.border = '1px solid rgba(255, 105, 180, 0.3)';
+            refreshBtn.style.color = 'var(--text-primary)';
+        } else {
+            refreshBtn.style.background = 'rgba(255, 105, 180, 0.9)';
+            refreshBtn.style.border = '1px solid rgba(255, 105, 180, 0.3)';
+            refreshBtn.style.color = 'white';
+        }
+    }
+    
+    // Update theme on dark mode toggle
+    const observer = new MutationObserver(updateRefreshButtonTheme);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    // Initial theme update
+    updateRefreshButtonTheme();
+    
+    console.log('🔄 Hard refresh button added!');
+}
+
 // DOM elements
 const greetingTitle = document.getElementById('greetingTitle');
 const loveBtn = document.getElementById('loveBtn');
@@ -121,6 +202,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize dark mode
     initDarkMode();
+    
+    // Add hard refresh button
+    addHardRefreshButton();
     
     // Animate greeting (only on home page)
     animateGreeting();
