@@ -269,7 +269,34 @@
         
         function shareGift(emoji, name, message) {
             const content = `${emoji} Virtual Gift: ${name}\n${message}`;
-            shareResult(content, 'gift');
+            
+            console.log('Gift share called:');
+            console.log('Gift emoji:', emoji);
+            console.log('Gift name:', name);
+            console.log('Gift message:', message);
+            console.log('Content:', content);
+            console.log('shareResult function available:', typeof shareResult);
+            
+            if (typeof shareResult === 'function') {
+                shareResult(content, 'gift');
+            } else {
+                console.error('shareResult function not available!');
+                // Fallback: create a simple share message
+                const shareText = `🎁 I'm sending you a virtual gift!\n\n${emoji} ${name}\n${message}\n\n💕 With all my love, Ennpo 💖`;
+                if (navigator.share) {
+                    navigator.share({
+                        title: '🎁 Virtual Gift from Ennpo',
+                        text: shareText,
+                        url: window.location.href
+                    }).catch(() => {});
+                } else {
+                    navigator.clipboard.writeText(`${shareText}\n\n${window.location.href}`).then(() => {
+                        alert('Copied to clipboard! 📋');
+                    }).catch(() => {
+                        alert('Failed to copy. Please try again.');
+                    });
+                }
+            }
         }
 
         function createGiftExplosion(emoji) {

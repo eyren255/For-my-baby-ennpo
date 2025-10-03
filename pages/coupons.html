@@ -429,7 +429,34 @@
             shareBtn.textContent = 'Share 📤';
             shareBtn.addEventListener('click', () => {
                 const content = `${coupon.emoji} Love Coupon: ${coupon.title}\n${coupon.desc}`;
-                shareResult(content, 'coupon');
+                
+                console.log('Coupon share called:');
+                console.log('Coupon emoji:', coupon.emoji);
+                console.log('Coupon title:', coupon.title);
+                console.log('Coupon desc:', coupon.desc);
+                console.log('Content:', content);
+                console.log('shareResult function available:', typeof shareResult);
+                
+                if (typeof shareResult === 'function') {
+                    shareResult(content, 'coupon');
+                } else {
+                    console.error('shareResult function not available!');
+                    // Fallback: create a simple share message
+                    const shareText = `💕 I'm sending you a special love coupon!\n\n${coupon.emoji} ${coupon.title}\n${coupon.desc}\n\n💖 Redeem this anytime, my love! From your sweetheart Ennpo 💕`;
+                    if (navigator.share) {
+                        navigator.share({
+                            title: '💝 Love Coupon from Ennpo',
+                            text: shareText,
+                            url: window.location.href
+                        }).catch(() => {});
+                    } else {
+                        navigator.clipboard.writeText(`${shareText}\n\n${window.location.href}`).then(() => {
+                            alert('Copied to clipboard! 📋');
+                        }).catch(() => {
+                            alert('Failed to copy. Please try again.');
+                        });
+                    }
+                }
             });
             buttonsDiv.appendChild(shareBtn);
             
