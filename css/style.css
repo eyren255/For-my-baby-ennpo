@@ -15,16 +15,45 @@
     --dark-pink: #ff69b4;
     --purple: #9370db;
     --shadow: rgba(0, 0, 0, 0.1);
+    
+    --bg-gradient-1: var(--pink);
+    --bg-gradient-2: var(--lavender);
+    --bg-gradient-3: var(--baby-blue);
+    --bg-gradient-4: var(--mint);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --text-primary: var(--purple);
+    --text-secondary: var(--dark-pink);
+    --nav-bg: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode {
+    --pink: #8b4789;
+    --lavender: #6b4b9b;
+    --baby-blue: #4b6b9b;
+    --mint: #4b7b6b;
+    --dark-pink: #ff69b4;
+    --purple: #b19cd9;
+    --shadow: rgba(0, 0, 0, 0.5);
+    
+    --bg-gradient-1: #1a0e1f;
+    --bg-gradient-2: #2d1b3d;
+    --bg-gradient-3: #1b2d3d;
+    --bg-gradient-4: #1b3d2d;
+    --card-bg: rgba(30, 20, 40, 0.9);
+    --text-primary: #d4b3ff;
+    --text-secondary: #ff69b4;
+    --nav-bg: rgba(30, 20, 40, 0.95);
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(-45deg, var(--pink), var(--lavender), var(--baby-blue), var(--mint));
+    background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3), var(--bg-gradient-4));
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    transition: background 0.5s ease;
 }
 
 @keyframes gradientShift {
@@ -78,17 +107,47 @@ body {
     100% { transform: translate(calc(var(--x, 50px) * 1.5), calc(var(--y, -100px) * 2)) scale(0.5); opacity: 0; }
 }
 
+.dark-mode-toggle {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 101;
+    background: var(--card-bg);
+    border: 2px solid var(--dark-pink);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 5px 20px var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 8px 30px var(--shadow);
+}
+
+.dark-mode-toggle:active {
+    transform: scale(0.95);
+}
+
 .nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--nav-bg);
     backdrop-filter: blur(20px);
     z-index: 100;
     padding: 1rem 0;
     box-shadow: 0 4px 30px var(--shadow);
     border-bottom: 1px solid rgba(255, 182, 193, 0.3);
+    transition: all 0.3s ease;
 }
 
 .nav-container {
@@ -103,7 +162,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: var(--purple);
+    color: var(--text-primary);
     font-weight: 600;
     padding: 0.6rem 1.2rem;
     border-radius: 30px;
@@ -191,7 +250,7 @@ body {
 
 .subtitle {
     font-size: 1.6rem;
-    color: var(--purple);
+    color: var(--text-primary);
     font-weight: 400;
     animation: fadeIn 1.5s ease-out;
 }
@@ -219,7 +278,7 @@ body {
 }
 
 .days-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--card-bg);
     border-radius: 25px;
     padding: 2.5rem;
     box-shadow: 0 15px 40px var(--shadow);
@@ -269,14 +328,14 @@ body {
 
 .days-text {
     font-size: 1.3rem;
-    color: var(--purple);
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
 .days-date {
     font-size: 1rem;
-    color: var(--purple);
+    color: var(--text-primary);
     opacity: 0.8;
 }
 
@@ -375,7 +434,7 @@ body {
 .milestone {
     font-family: 'Kalam', cursive;
     font-size: 1.5rem;
-    color: var(--purple);
+    color: var(--text-primary);
     margin-top: 1rem;
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -404,8 +463,8 @@ body {
 }
 
 .action-btn {
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--purple);
+    background: var(--card-bg);
+    color: var(--text-primary);
     text-decoration: none;
     padding: 2rem 1.5rem;
     border-radius: 20px;
@@ -454,13 +513,14 @@ body {
 }
 
 .footer {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--nav-bg);
     text-align: center;
     padding: 2.5rem;
-    color: var(--purple);
+    color: var(--text-primary);
     font-weight: 400;
     backdrop-filter: blur(20px);
     margin-top: 4rem;
+    transition: all 0.3s ease;
 }
 
 @media (max-width: 768px) {
@@ -497,6 +557,13 @@ body {
     .actions {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    
+    .dark-mode-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        right: 15px;
     }
 }
 

@@ -11,6 +11,29 @@ const loveCount = document.getElementById('loveCount');
 const milestone = document.getElementById('milestone');
 const daysTogether = document.getElementById('daysTogether');
 const heartsContainer = document.getElementById('heartsContainer');
+const darkModeToggle = document.getElementById('darkModeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+// Dark mode functionality
+function initDarkMode() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.textContent = '☀️';
+    }
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    console.log(isDark ? '🌙 Dark mode activated! Easy on the eyes! 🌙' : '☀️ Light mode activated! Bright and cheerful! ☀️');
+}
+
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+}
 
 // Love counter state
 let clickCount = 0;
@@ -30,6 +53,9 @@ const milestones = {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
     console.log("🚀 Website loaded! Ready to spread love! 💖");
+    
+    // Initialize dark mode
+    initDarkMode();
     
     // Animate greeting
     animateGreeting();
