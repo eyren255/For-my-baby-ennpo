@@ -386,27 +386,6 @@ function createConfetti() {
     }
 }
 
-// Share functionality
-function shareWebsite() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'For My Baby Ennpo 💖',
-            text: 'Check out this cute website Shin made for Ennpo!',
-            url: window.location.href
-        }).catch(() => {});
-    } else {
-        const url = window.location.href;
-        try {
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Link copied to clipboard! 📋');
-            }).catch(() => {
-                console.error('Failed to copy to clipboard');
-            });
-        } catch (error) {
-            console.error('Clipboard not available:', error);
-        }
-    }
-}
 
 // Create sparkles animation
 function createSparkles() {
@@ -508,12 +487,12 @@ document.addEventListener('keydown', function(e) {
 
 // Share functionality
 function shareWebsite() {
-    const text = "Check out this cute romantic website made for me! 💖";
+    const text = "💕 Check out this amazing romantic website my sweetheart Shin made for me! It's filled with love, games, and special surprises just for me! 💖\n\nYou should see all the cute things he created - it's so sweet! 🥰";
     const url = window.location.href;
     
     if (navigator.share) {
         navigator.share({
-            title: 'For My Baby Ennpo 💖',
+            title: '💖 For My Baby Ennpo - A Love Website',
             text: text,
             url: url
         }).catch(() => {});
@@ -523,12 +502,59 @@ function shareWebsite() {
 }
 
 function shareResult(content, type = 'result') {
-    const text = `${content}\n\nFrom Ennpo's romantic website 💖`;
+    let text, title;
+    
+    if (type === 'coupon') {
+        // Extract coupon details and create personalized message
+        const lines = content.split('\n');
+        const couponLine = lines[0]; // Contains emoji and title
+        const descLine = lines[1]; // Contains description
+        
+        // Extract just the title part (after the emoji)
+        const titleMatch = couponLine.match(/^(.+?)\s+(.+)$/);
+        const emoji = titleMatch ? titleMatch[1] : '💝';
+        const titleText = titleMatch ? titleMatch[2].replace('Love Coupon: ', '') : couponLine.replace('Love Coupon: ', '');
+        
+        text = `💕 I'm sending you a special love coupon!\n\n${emoji} ${titleText}\n${descLine}\n\n💖 Redeem this anytime, my love! From your sweetheart Ennpo 💕`;
+        title = '💝 Love Coupon from Ennpo';
+    } else if (type === 'game') {
+        // Extract game result and make it personal
+        const resultText = content.replace('\n\nFrom Ennpo\'s love game 💕', '');
+        text = `🎮 Love Game Result!\n\n${resultText}\n\n💕 From Ennpo's romantic website 💖`;
+        title = '🎮 Love Game Result';
+    } else if (type === 'truth') {
+        // Extract truth question and make it personal
+        const questionText = content.replace('Truth: ', '');
+        text = `💭 I have a truth question for you!\n\n${questionText}\n\n💕 From Ennpo's romantic website 💖`;
+        title = '💭 Truth Question from Ennpo';
+    } else if (type === 'dare') {
+        // Extract dare challenge and make it personal
+        const dareText = content.replace('Dare: ', '');
+        text = `💘 I dare you to do this!\n\n${dareText}\n\n💕 From Ennpo's romantic website 💖`;
+        title = '💘 Dare Challenge from Ennpo';
+    } else if (type === 'gift') {
+        // Extract gift details and make it personal
+        const lines = content.split('\n');
+        const giftLine = lines[0]; // Contains emoji and gift name
+        const messageLine = lines[1]; // Contains message
+        
+        // Extract just the gift name (after the emoji)
+        const titleMatch = giftLine.match(/^(.+?)\s+(.+)$/);
+        const emoji = titleMatch ? titleMatch[1] : '🎁';
+        const giftName = titleMatch ? titleMatch[2].replace('Virtual Gift: ', '') : giftLine.replace('Virtual Gift: ', '');
+        
+        text = `🎁 I'm sending you a virtual gift!\n\n${emoji} ${giftName}\n${messageLine}\n\n💕 With all my love, Ennpo 💖`;
+        title = '🎁 Virtual Gift from Ennpo';
+    } else {
+        text = `${content}\n\n💕 From Ennpo's romantic website 💖`;
+        title = '💕 Love Message from Ennpo';
+    }
+    
     const url = window.location.href;
     
     if (navigator.share) {
         navigator.share({
-            title: `${type === 'game' ? 'Love Game' : type === 'truth' ? 'Truth' : type === 'dare' ? 'Dare' : 'Love Coupon'} Result 💕`,
+            title: title,
             text: text,
             url: url
         }).catch(() => {});
