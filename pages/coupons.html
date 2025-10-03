@@ -324,13 +324,21 @@
                 ? coupons 
                 : coupons.filter(c => c.category === currentFilter);
             
-            grid.innerHTML = filtered.map(coupon => `
-                <div class="coupon-card" onclick='showCoupon(${JSON.stringify(coupon)}, true)'>
+            // Clear grid
+            grid.innerHTML = '';
+            
+            // Create cards with proper event listeners
+            filtered.forEach(coupon => {
+                const card = document.createElement('div');
+                card.className = 'coupon-card';
+                card.innerHTML = `
                     <span class="coupon-emoji">${coupon.emoji}</span>
                     <div class="coupon-title">${coupon.title}</div>
                     <div class="coupon-desc">${coupon.desc}</div>
-                </div>
-            `).join('');
+                `;
+                card.addEventListener('click', () => showCoupon(coupon, true));
+                grid.appendChild(card);
+            });
         }
         
         function renderCustomCoupons() {
@@ -339,13 +347,22 @@
             
             if (customCoupons.length > 0) {
                 section.style.display = 'block';
-                grid.innerHTML = customCoupons.map((coupon, index) => `
-                    <div class="coupon-card" onclick='showCoupon(${JSON.stringify(coupon)}, true)'>
+                
+                // Clear grid
+                grid.innerHTML = '';
+                
+                // Create cards with proper event listeners
+                customCoupons.forEach(coupon => {
+                    const card = document.createElement('div');
+                    card.className = 'coupon-card';
+                    card.innerHTML = `
                         <span class="coupon-emoji">${coupon.emoji}</span>
                         <div class="coupon-title">${coupon.title}</div>
                         <div class="coupon-desc">${coupon.desc}</div>
-                    </div>
-                `).join('');
+                    `;
+                    card.addEventListener('click', () => showCoupon(coupon, true));
+                    grid.appendChild(card);
+                });
             } else {
                 section.style.display = 'none';
             }
@@ -361,33 +378,64 @@
         }
 
         function showCoupon(coupon, showShare = false) {
+            // Remove any existing modals first
+            document.querySelectorAll('.overlay, .coupon-modal').forEach(el => el.remove());
+            
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
-            overlay.onclick = () => {
-                modal.remove();
-                overlay.remove();
-            };
             
             const modal = document.createElement('div');
             modal.className = 'coupon-modal';
             
-            const shareButton = showShare ? `
-                <button class="close-modal-btn" onclick="event.stopPropagation(); shareCoupon('${coupon.emoji}', '${coupon.title}', '${coupon.desc}')">
-                    Share 🔗
-                </button>
-            ` : '';
+            // Create modal content
+            const emojiDiv = document.createElement('div');
+            emojiDiv.className = 'modal-emoji';
+            emojiDiv.textContent = coupon.emoji;
             
-            modal.innerHTML = `
-                <div class="modal-emoji">${coupon.emoji}</div>
-                <div class="modal-title">${coupon.title}</div>
-                <div class="modal-desc">${coupon.desc}</div>
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;">
-                    ${shareButton}
-                    <button class="close-modal-btn" onclick="this.parentElement.parentElement.remove(); document.querySelector('.overlay').remove()">
-                        Close ✖️
-                    </button>
-                </div>
-            `;
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'modal-title';
+            titleDiv.textContent = coupon.title;
+            
+            const descDiv = document.createElement('div');
+            descDiv.className = 'modal-desc';
+            descDiv.textContent = coupon.desc;
+            
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.style.cssText = 'display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;';
+            
+            // Create share button if needed
+            if (showShare) {
+                const shareBtn = document.createElement('button');
+                shareBtn.className = 'close-modal-btn';
+                shareBtn.textContent = 'Share 🔗';
+                shareBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    shareCoupon(coupon.emoji, coupon.title, coupon.desc);
+                });
+                buttonsDiv.appendChild(shareBtn);
+            }
+            
+            // Create close button
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-modal-btn';
+            closeBtn.textContent = 'Close ✖️';
+            closeBtn.addEventListener('click', () => {
+                modal.remove();
+                overlay.remove();
+            });
+            buttonsDiv.appendChild(closeBtn);
+            
+            // Assemble modal
+            modal.appendChild(emojiDiv);
+            modal.appendChild(titleDiv);
+            modal.appendChild(descDiv);
+            modal.appendChild(buttonsDiv);
+            
+            // Handle overlay click
+            overlay.addEventListener('click', () => {
+                modal.remove();
+                overlay.remove();
+            });
             
             document.body.appendChild(overlay);
             document.body.appendChild(modal);
