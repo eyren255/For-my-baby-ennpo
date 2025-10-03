@@ -21,27 +21,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../css/style.css">
     
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="navLinks">
-                <a href="../index.html" class="nav-link">🏠 Home</a>
-                <a href="notes.html" class="nav-link">📝 Notes</a>
-                <a href="game.html" class="nav-link active">🎮 Game</a>
-                <a href="truthordare.html" class="nav-link">💘 Fun</a>
-                <a href="wouldyourather.html" class="nav-link">💭 Would You Rather</a>
-                <a href="gifts.html" class="nav-link">🎁 Gifts</a>
-                <a href="coupons.html" class="nav-link">🎫 Coupons</a>
-                <a href="secret.html" class="nav-link secret">🔐 Secret</a>
-            </div>
-        </div>
-    </nav>
-    
     <style>
         .game-container {
             max-width: 600px;
@@ -157,25 +136,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
             display: block;
         }
         
-        .back-btn {
-            position: fixed;
-            top: 100px;
-            left: 20px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            z-index: 10;
-            border: 1px solid var(--border);
-        }
-        
-        .back-btn:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
         
         .score {
             font-size: 1.2rem;
@@ -225,9 +185,6 @@ Additionally, please fix the dark mode theme, as some colors are incorrect and d
         </div>
     </nav>
     
-    <!-- Back button -->
-    <a href="../index.html" class="back-btn">← Back</a>
-
     <!-- Main content -->
     <main class="main">
         <div class="container">
