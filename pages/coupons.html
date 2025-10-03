@@ -259,6 +259,12 @@
                 <button class="create-btn" onclick="createCustomCoupon()">Create Coupon 🎫</button>
             </div>
 
+            <div id="customCouponsSection" style="display: none;">
+                <h2 class="title" style="font-size: 1.8rem; margin-top: 2rem;">Your Custom Coupons ✨</h2>
+                <div class="coupons-grid" id="customCouponsGrid"></div>
+            </div>
+
+            <h2 class="title" style="font-size: 1.8rem; margin-top: 2rem;">Preset Coupons 💝</h2>
             <div class="category-tabs">
                 <button class="category-tab active" onclick="filterCategory('all')">All</button>
                 <button class="category-tab" onclick="filterCategory('cute')">Cute 🥰</button>
@@ -310,6 +316,7 @@
         ];
 
         let currentFilter = 'all';
+        let customCoupons = [];
 
         function renderCoupons() {
             const grid = document.getElementById('couponsGrid');
@@ -318,12 +325,30 @@
                 : coupons.filter(c => c.category === currentFilter);
             
             grid.innerHTML = filtered.map(coupon => `
-                <div class="coupon-card" onclick='showCoupon(${JSON.stringify(coupon)})'>
+                <div class="coupon-card" onclick='showCoupon(${JSON.stringify(coupon)}, true)'>
                     <span class="coupon-emoji">${coupon.emoji}</span>
                     <div class="coupon-title">${coupon.title}</div>
                     <div class="coupon-desc">${coupon.desc}</div>
                 </div>
             `).join('');
+        }
+        
+        function renderCustomCoupons() {
+            const section = document.getElementById('customCouponsSection');
+            const grid = document.getElementById('customCouponsGrid');
+            
+            if (customCoupons.length > 0) {
+                section.style.display = 'block';
+                grid.innerHTML = customCoupons.map((coupon, index) => `
+                    <div class="coupon-card" onclick='showCoupon(${JSON.stringify(coupon)}, true)'>
+                        <span class="coupon-emoji">${coupon.emoji}</span>
+                        <div class="coupon-title">${coupon.title}</div>
+                        <div class="coupon-desc">${coupon.desc}</div>
+                    </div>
+                `).join('');
+            } else {
+                section.style.display = 'none';
+            }
         }
 
         function filterCategory(category) {
@@ -335,7 +360,7 @@
             renderCoupons();
         }
 
-        function showCoupon(coupon) {
+        function showCoupon(coupon, showShare = false) {
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
             overlay.onclick = () => {
@@ -345,14 +370,19 @@
             
             const modal = document.createElement('div');
             modal.className = 'coupon-modal';
+            
+            const shareButton = showShare ? `
+                <button class="close-modal-btn" onclick="event.stopPropagation(); shareCoupon('${coupon.emoji}', '${coupon.title}', '${coupon.desc}')">
+                    Share 🔗
+                </button>
+            ` : '';
+            
             modal.innerHTML = `
                 <div class="modal-emoji">${coupon.emoji}</div>
                 <div class="modal-title">${coupon.title}</div>
                 <div class="modal-desc">${coupon.desc}</div>
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    <button class="close-modal-btn" onclick="sendCoupon('${coupon.emoji}', '${coupon.title}', '${coupon.desc}')">
-                        Send Coupon 💌
-                    </button>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;">
+                    ${shareButton}
                     <button class="close-modal-btn" onclick="this.parentElement.parentElement.remove(); document.querySelector('.overlay').remove()">
                         Close ✖️
                     </button>
@@ -365,42 +395,49 @@
             createCouponExplosion(coupon.emoji);
         }
 
-        function sendCoupon(emoji, title, desc) {
-            const text = `${emoji} Love Coupon: ${title}\n${desc}\n\nFrom Shin with love 💝`;
+        function shareCoupon(emoji, title, desc) {
+            const text = `${emoji} Love Coupon: ${title}\n${desc}\n\nFrom Ennpo with love 💝`;
             
             if (navigator.share) {
                 navigator.share({
-                    title: 'Love Coupon for Ennpo 💝',
+                    title: 'Love Coupon for Shin 💝',
                     text: text,
                 }).catch(() => {});
             } else {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('Coupon copied! You can send it to Ennpo now! 📋💕');
+                    alert('Coupon copied to clipboard! 📋💕');
                 });
             }
-            
-            // Close modal after sending
-            setTimeout(() => {
-                document.querySelector('.coupon-modal')?.remove();
-                document.querySelector('.overlay')?.remove();
-            }, 500);
         }
 
         function createCustomCoupon() {
-            const title = document.getElementById('customTitle').value;
-            const desc = document.getElementById('customDesc').value;
-            const emoji = document.getElementById('customEmoji').value || '💖';
+            const title = document.getElementById('customTitle').value.trim();
+            const desc = document.getElementById('customDesc').value.trim();
+            const emoji = document.getElementById('customEmoji').value.trim() || '💖';
             
             if (!title || !desc) {
                 alert('Please fill in title and description!');
                 return;
             }
             
-            showCoupon({ emoji, title, desc });
+            const newCoupon = { emoji, title, desc, category: 'custom' };
+            customCoupons.push(newCoupon);
             
+            // Clear form
             document.getElementById('customTitle').value = '';
             document.getElementById('customDesc').value = '';
             document.getElementById('customEmoji').value = '';
+            
+            // Render the custom coupons section
+            renderCustomCoupons();
+            
+            // Show success message with explosion
+            createCouponExplosion(emoji);
+            
+            // Scroll to custom coupons section
+            setTimeout(() => {
+                document.getElementById('customCouponsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
         }
 
         function createCouponExplosion(emoji) {

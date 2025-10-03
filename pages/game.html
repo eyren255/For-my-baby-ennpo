@@ -256,16 +256,15 @@
             "Who loves the other unconditionally more?"
         ];
         
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            setupGame();
-        });
-        
         // Set up game
         function setupGame() {
-            shinBtn.addEventListener('click', () => handleAnswer(true));
-            ennpoBtn.addEventListener('click', () => handleAnswer(false));
-            playAgainBtn.addEventListener('click', resetGame);
+            if (shinBtn && ennpoBtn) {
+                shinBtn.addEventListener('click', () => handleAnswer(true));
+                ennpoBtn.addEventListener('click', () => handleAnswer(false));
+            }
+            if (playAgainBtn) {
+                playAgainBtn.addEventListener('click', resetGame);
+            }
             
             // Start with first question
             nextQuestion();
@@ -359,21 +358,26 @@
         }
         
         // Add confetti animation
-        const style = document.createElement('style');
-        style.textContent = `
+        const gameStyle = document.createElement('style');
+        gameStyle.textContent = `
             @keyframes confetti {
                 0% { transform: translateY(0) rotate(0deg); opacity: 1; }
                 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
             }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(gameStyle);
         
-        // Add some fun hover effects
+        // Initialize game when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            setupGame();
+            
+            // Add some fun hover effects
             const optionBtns = document.querySelectorAll('.option-btn');
             optionBtns.forEach(btn => {
                 btn.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                    if (!gameStarted) {
+                        this.style.transform = 'translateY(-5px) scale(1.05)';
+                    }
                 });
                 
                 btn.addEventListener('mouseleave', function() {
