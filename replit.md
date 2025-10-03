@@ -24,6 +24,12 @@ This is a cute and interactive romantic website built with vanilla HTML, CSS, an
 - Configured workflow for automatic server startup
 - Configured autoscale deployment
 - Created project documentation
+- Added love button with milestone celebrations to home page (5, 10, 25, 50, 100, 200, 500 clicks)
+- Fixed broken buttons on game and notes pages
+- Implemented love coupons page with preset and custom coupon creation
+- Added frosted-glass styled share buttons to all pages (index, notes, game, wouldyourather, secret)
+- Fixed coupon modal functionality - both preset and custom coupons now open with share capability
+- All share buttons use Web Share API with clipboard fallback for cross-device compatibility
 
 ## Project Architecture
 
